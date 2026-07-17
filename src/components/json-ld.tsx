@@ -1,5 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { absoluteUrl } from "@/lib/seo";
+import { BRAND_LOGO_PATH, insightOgImagePath } from "@/lib/seo/brand-assets";
 import { isPlaceholder } from "@/lib/seo/placeholders";
 import type { ServiceFaq } from "@/lib/services-content";
 import type { ServiceContent } from "@/lib/services-content";
@@ -14,7 +15,7 @@ function JsonLdScript({ data }: { data: object }) {
 }
 
 export function OrganizationJsonLd() {
-  const { contact, expert } = siteConfig;
+  const { contact } = siteConfig;
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -24,9 +25,12 @@ export function OrganizationJsonLd() {
     url: absoluteUrl("/"),
     email: contact.email,
     inLanguage: "en",
-    areaServed: expert.jurisdictions
-      .filter((j) => !isPlaceholder(j))
-      .map((j) => ({ "@type": "AdministrativeArea", name: j })),
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl(BRAND_LOGO_PATH),
+      width: 512,
+      height: 512,
+    },
     knowsAbout: [
       "Commercial dispute expert witness",
       "Forensic accounting",
@@ -143,7 +147,6 @@ export function ServiceJsonLd({ service }: { service: ServiceContent }) {
         description: service.metaDescription,
         url: absoluteUrl(service.path),
         provider: { "@id": `${absoluteUrl("/")}#organization` },
-        areaServed: { "@type": "Place", name: "Worldwide" },
         serviceType: service.title,
         audience: {
           "@type": "Audience",
@@ -173,6 +176,7 @@ export function ArticleJsonLd({
   const published = new Date(date).toISOString();
   const modifiedIso = new Date(modified ?? date).toISOString();
   const authorName = isPlaceholder(author) ? siteConfig.businessName : author;
+  const imageUrl = absoluteUrl(insightOgImagePath(slug));
 
   return (
     <JsonLdScript
@@ -189,10 +193,12 @@ export function ArticleJsonLd({
           name: siteConfig.businessName,
           logo: {
             "@type": "ImageObject",
-            url: absoluteUrl("/opengraph-image"),
+            url: absoluteUrl(BRAND_LOGO_PATH),
+            width: 512,
+            height: 512,
           },
         },
-        image: [absoluteUrl("/opengraph-image")],
+        image: [imageUrl],
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         url,
         inLanguage: "en",

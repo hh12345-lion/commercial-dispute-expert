@@ -3,11 +3,10 @@
 ## Pre-launch content (required)
 
 - [ ] Replace all `[PLACEHOLDER]` values in `src/config/site.ts`
-- [ ] Add verified expert photo to `public/images/` and update `expert.photoPath`
+- [ ] Add verified expert photo to `public/images/` if publishing named expert profiles in future
 - [ ] Replace testimonial placeholders with approved quotes (or remove section)
 - [ ] Legal review of `privacy-policy`, `terms`, and `cookie-policy`
 - [ ] Confirm company number, registered address and regulatory memberships
-- [ ] Remove amber placeholder notice on expert page once content is live
 
 ## DNS & hosting
 
@@ -67,6 +66,5 @@ See `POST_LAUNCH_SEO.md` for directory listings, content calendar and backlink t
 - `/`
 - `/services/commercial-dispute-expert-witness`
 - `/how-to-instruct`
-- `/experts/lead-expert` (update slug if changed in config)
 - `/insights`
 - `/contact`

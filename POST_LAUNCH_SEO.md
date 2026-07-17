@@ -4,12 +4,12 @@
 
 - [ ] Google Search Console: verify property, submit sitemap, fix coverage issues
 - [ ] Bing Webmaster Tools: verify and submit sitemap
-- [ ] Google Business Profile (if physical UK office exists) — consistent NAP with site config
+- [ ] Google Business Profile (if a verified business address exists) — consistent NAP with site config
 - [ ] LinkedIn company page with link to site
 
-## Directory & authority (weeks 2–4)
+## Directory & authority (weeks 2–4, where verified and applicable)
 
-- [ ] Create profile on [expertwitness.co.uk](https://www.expertwitness.co.uk/) with link to site
+- [ ] Create profile on [expertwitness.co.uk](https://www.expertwitness.co.uk/) with link to site (if eligible)
 - [ ] Academy of Experts directory (if member)
 - [ ] ICAEW / ACCA find-a-member or firm listing (if applicable)
 - [ ] Ensure NAP (name, address, phone) matches site exactly on all listings
@@ -34,7 +34,7 @@ Suggested next articles:
 11. Professional negligence quantum — accountant claims
 12. Data requests for forensic accountants at disclosure
 
-Internal linking: each article → 2–3 service pages + expert bio.
+Internal linking: each article → 2–3 service pages.
 
 ## Backlinks (ongoing)
 

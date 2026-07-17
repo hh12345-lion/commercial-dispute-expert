@@ -8,7 +8,7 @@ import { getAllInsights } from "@/lib/mdx";
 export const metadata = buildMetadata({
   title: "Insights - Commercial Dispute & Expert Witness",
   description:
-    "Articles for solicitors on CPR Part 35, loss of profits quantum, expert witness appointments and commercial dispute forensic accounting.",
+    "Articles for legal professionals on CPR Part 35, loss of profits quantum, expert witness appointments and commercial dispute forensic accounting.",
   path: "/insights",
 });
 

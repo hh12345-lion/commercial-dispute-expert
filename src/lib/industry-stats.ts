@@ -1,8 +1,8 @@
 /** Indicative market data - not this firm's pricing. Sources cited on page. */
 export const FORENSIC_INDUSTRY_STATS = [
-  ["Typical expert hourly rate", "£200–£550/hr", "Industry average"],
+  ["Typical expert hourly rate (UK market)", "£200–£550/hr", "UK industry average"],
   ["Typical report completion time", "20–40 hours", "Expert Evidence International"],
-  ["Guide price for draft expert report", "£3,000–£15,000", "Expert Evidence International"],
+  ["Guide price for draft expert report (UK market)", "£3,000–£15,000", "UK industry benchmarks"],
   ["Court framework - civil cases", "CPR Part 35 (example)", "Civil Procedure Rules"],
   ["Expert's primary duty", "To the court", "Common court rules"],
   ["SJE appointments available", "Yes", "Where rules permit"],

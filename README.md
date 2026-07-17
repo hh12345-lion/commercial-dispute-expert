@@ -1,6 +1,6 @@
 # Commercial Dispute Expert
 
-Marketing website for [commercialdisputeexpert.com](https://commercialdisputeexpert.com) — UK-focused commercial dispute expert witness and forensic accounting services for solicitors and counsel.
+Marketing website for [commercialdisputeexpert.com](https://commercialdisputeexpert.com) — UK-qualified commercial dispute expert witness and forensic accounting connector for legal professionals worldwide.
 
 ## Stack
 

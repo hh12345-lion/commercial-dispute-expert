@@ -25,7 +25,6 @@ export const servicesContent: Record<string, ServiceContent> = {
     path: "/services/commercial-dispute-expert-witness",
     keywords: [
       "commercial dispute expert witness",
-      "commercial dispute expert witness",
       "forensic accountant commercial litigation",
     ],
     intro:
@@ -78,7 +77,7 @@ export const servicesContent: Record<string, ServiceContent> = {
     title: "Litigation Support",
     metaTitle: "Litigation Support Forensic Accountant",
     metaDescription:
-      "Privileged litigation support for solicitors: financial analysis, quantum assessment and cross-examination preparation without expert disclosure.",
+      "Privileged litigation support for legal teams: financial analysis, quantum assessment and cross-examination preparation without expert disclosure.",
     path: "/services/litigation-support",
     keywords: ["litigation support forensic accountant", "forensic accounting litigation support"],
     intro:
@@ -391,7 +390,7 @@ export const servicesContent: Record<string, ServiceContent> = {
     title: "Professional Negligence",
     metaTitle: "Professional Negligence Forensic Accountant",
     metaDescription:
-      "Financial quantum in professional negligence claims. Forensic accounting expert witness for solicitors handling accountant, adviser and corporate negligence disputes.",
+      "Financial quantum in professional negligence claims. Forensic accounting expert witness for legal teams handling accountant, adviser and corporate negligence disputes.",
     path: "/services/professional-negligence",
     keywords: ["professional negligence forensic accountant", "accountant negligence expert witness"],
     intro:

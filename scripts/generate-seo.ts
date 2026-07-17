@@ -95,7 +95,6 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 Disallow: /.netlify/
-Disallow: /thank-you
 
 Sitemap: ${host}/sitemap.xml
 `;

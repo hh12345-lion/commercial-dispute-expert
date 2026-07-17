@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import {
+  BRAND_LOGO_PATH,
+  DEFAULT_OG_IMAGE_PATH,
+  insightOgImagePath,
+} from "@/lib/seo/brand-assets";
 
 const siteUrl = siteConfig.domain.replace(/\/$/, "");
 
@@ -16,7 +21,16 @@ export type PageSeo = {
   path: string;
   keywords?: string[];
   noIndex?: boolean;
+  ogImagePath?: string;
 };
+
+function defaultOgImagePath(path: string): string {
+  const insightMatch = path.match(/^\/insights\/([^/]+)$/);
+  if (insightMatch) {
+    return insightOgImagePath(insightMatch[1]);
+  }
+  return DEFAULT_OG_IMAGE_PATH;
+}
 
 export function buildMetadata({
   title,
@@ -24,17 +38,17 @@ export function buildMetadata({
   path,
   keywords,
   noIndex,
+  ogImagePath,
 }: PageSeo): Metadata {
   const url = absoluteUrl(path);
-  const fullTitle =
-    path === "/"
-      ? `${title} | ${siteConfig.businessName}`
-      : `${title} | ${siteConfig.businessName}`;
+  const fullTitle = `${title} | ${siteConfig.businessName}`;
+  const resolvedKeywords = keywords?.length ? keywords : defaultKeywords;
+  const ogImage = absoluteUrl(ogImagePath ?? defaultOgImagePath(path));
 
   return {
     title: fullTitle,
     description,
-    ...(keywords?.length ? { keywords } : {}),
+    keywords: resolvedKeywords,
     alternates: { canonical: url },
     robots: noIndex
       ? { index: false, follow: false, googleBot: { index: false, follow: false } }
@@ -50,24 +64,29 @@ export function buildMetadata({
       siteName: siteConfig.businessName,
       title: fullTitle,
       description,
-      images: [{ url: absoluteUrl("/opengraph-image"), width: 1200, height: 630, alt: siteConfig.businessName }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: siteConfig.businessName }],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [absoluteUrl("/opengraph-image")],
+      images: [ogImage],
     },
   };
 }
 
 export function buildNotFoundMetadata(): Metadata {
-  return buildMetadata({
-    title: "Page not found",
+  const fullTitle = `Page not found | ${siteConfig.businessName}`;
+
+  return {
+    title: fullTitle,
     description: "The page you requested could not be found on Commercial Dispute Expert.",
-    path: "/404",
-    noIndex: true,
-  });
+    robots: {
+      index: false,
+      follow: false,
+      googleBot: { index: false, follow: false },
+    },
+  };
 }
 
 export const defaultKeywords = [
@@ -76,3 +95,5 @@ export const defaultKeywords = [
   "loss of profits expert witness",
   "CPR Part 35 expert report",
 ];
+
+export { BRAND_LOGO_PATH, DEFAULT_OG_IMAGE_PATH, insightOgImagePath };

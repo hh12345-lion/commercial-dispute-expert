@@ -1,79 +1,61 @@
 /**
  * Central site configuration.
- * Replace [PLACEHOLDER] values with verified expert/firm details before go-live.
+ * Add company number, phone, address, LinkedIn and testimonials when verified details are available.
  */
 
 export const siteConfig = {
   businessName: "Commercial Dispute Expert",
-  legalEntityName: "[PLACEHOLDER] Legal entity name Ltd",
-  companyNumber: "[PLACEHOLDER]",
+  legalEntityName: "Commercial Dispute Expert",
+  companyNumber: "",
   domain: process.env.NEXT_PUBLIC_SITE_URL ?? "https://commercialdisputeexpert.com",
   brandShort: "CommercialDisputeExpert",
   tagline: "Commercial disputes. Financial clarity. Court-ready evidence.",
   connectorPitch:
-    "CommercialDisputeExpert.com connects solicitors, counsel and law firms with qualified commercial dispute expert witnesses - forensic accounting, quantum analysis and court-ready expert reports.",
+    "CommercialDisputeExpert.com connects legal professionals, counsel and law firms worldwide with qualified commercial dispute expert witnesses — forensic accounting, quantum analysis and court-ready expert reports under English law and international forums.",
   description:
     "We connect legal professionals with independent commercial dispute expert witnesses and forensic accountants for litigation and arbitration. Not a law firm - we do not provide legal advice.",
 
   expert: {
-    slug: "lead-expert",
-    name: "[PLACEHOLDER] Expert Full Name",
+    slug: "network",
+    name: "Commercial Dispute Expert network",
     title: "Commercial Dispute Expert Witness",
-    credentials: [
-      "[PLACEHOLDER] FCA / ACA / ACCA",
-      "[PLACEHOLDER] MAE - Member, Academy of Experts",
-      "[PLACEHOLDER] CFF - Certified in Financial Forensics",
-    ],
+    credentials: [] as string[],
     jurisdictions: ["Courts and tribunals", "International arbitration"],
-    yearsExperience: "[PLACEHOLDER]",
-    expertAppointments: "[PLACEHOLDER]",
-    bioSummary:
-      "[PLACEHOLDER] Forensic accountant and commercial dispute expert witness with extensive experience quantifying economic damages, preparing CPR Part 35 compliant reports, and giving testimony in court and arbitration.",
+    yearsExperience: "",
+    expertAppointments: "",
+    bioSummary: "",
     photoPath: "/images/expert-placeholder.jpg",
   },
 
   contact: {
-    phone: "[PLACEHOLDER] +44 20 XXXX XXXX",
-    phoneTel: "+4420XXXXXXXX",
+    phone: "",
+    phoneTel: "",
     email: "contact@commercialdisputeexpert.com",
     address: {
-      line1: "[PLACEHOLDER] Office address line 1",
-      line2: "[PLACEHOLDER] City, Postcode",
-      country: "[PLACEHOLDER] Country",
+      line1: "",
+      line2: "",
+      country: "",
     },
   },
 
-  regulatoryBodies: [
-    "[PLACEHOLDER] ICAEW / ACCA member firm",
-    "[PLACEHOLDER] Professional indemnity insurance in place",
-  ],
+  regulatoryBodies: ["Independent forensic accountants and commercial dispute expert witnesses"],
 
   trustMetrics: {
-    yearsPractice: "[PLACEHOLDER] 25+",
-    expertInstructions: "[PLACEHOLDER] 200+",
-    regulated: "ICAEW / ACCA regulated practice",
+    yearsPractice: "Established network",
+    expertInstructions: "Multi-sector experience",
+    regulated: "Qualified forensic accountants",
   },
 
   socialLinks: {
-    linkedin: "[PLACEHOLDER] https://linkedin.com/company/...",
+    linkedin: "",
   },
 
-  testimonials: [
-    {
-      quote:
-        "[PLACEHOLDER] Testimonial from solicitor or barrister - replace with approved quote before publication.",
-      author: "[PLACEHOLDER] Name",
-      role: "[PLACEHOLDER] Solicitor / Barrister",
-      firm: "[PLACEHOLDER] Firm name",
-    },
-    {
-      quote:
-        "[PLACEHOLDER] Second testimonial - clear, concise expert reports and responsive turnaround.",
-      author: "[PLACEHOLDER] Name",
-      role: "[PLACEHOLDER] Partner",
-      firm: "[PLACEHOLDER] Law firm",
-    },
-  ],
+  testimonials: [] as {
+    quote: string;
+    author: string;
+    role: string;
+    firm: string;
+  }[],
 
   navigation: {
     resources: [

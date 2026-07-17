@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 export const metadata = buildMetadata({
   title: "Contact Commercial Dispute Expert",
   description:
-    "Contact Commercial Dispute Expert for confidential expert witness matching enquiries from solicitors and counsel.",
+    "Contact Commercial Dispute Expert for confidential expert witness matching enquiries from legal professionals and counsel.",
   path: "/contact",
 });
 
@@ -20,7 +20,7 @@ export default function ContactPage() {
       />
       <h1 className="text-3xl font-bold text-charcoal md:text-4xl">Contact us</h1>
       <p className="mt-6 max-w-3xl text-lg text-foreground">
-        Enquiries are treated confidentially. We respond to solicitors, barristers and authorised
+        Enquiries are treated confidentially. We respond to legal professionals, counsel and authorised
         representatives. Submit case details for expert matching - we do not publish fee quotes on
         this site; indicative industry benchmarks are shown on the home page for reference only.
       </p>

@@ -43,9 +43,11 @@ export default function TermsPage() {
         </p>
         <h2>Limitation of liability</h2>
         <p>
-          [PLACEHOLDER] Add limitation of liability wording reviewed by your advisers before
-          go-live. To the extent permitted by law, we exclude liability for loss arising from use of
-          this website.
+          To the extent permitted by law, we exclude liability for loss arising from use of this
+          website. Nothing in these terms excludes or limits liability for death or personal injury
+          caused by negligence, fraud, or any other liability that cannot be excluded or limited
+          under applicable law. Content on this site is for general information only and does not
+          constitute legal or expert advice.
         </p>
         <h2>Governing law</h2>
         <p>

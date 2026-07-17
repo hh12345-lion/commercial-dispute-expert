@@ -1,4 +1,5 @@
 import { getAllInsights } from "@/lib/mdx";
+import { STATIC_PATH_LASTMOD } from "@/lib/seo/static-lastmod";
 
 /** ISO date (YYYY-MM-DD) for sitemap lastmod */
 export type PathLastModMap = Record<string, string>;
@@ -15,7 +16,7 @@ function maxDate(a: string, b: string): string {
 
 /** Per-path lastmod: insight articles use MDX dates; hub uses latest insight date */
 export function buildPathLastModMap(fallbackDate: string): PathLastModMap {
-  const map: PathLastModMap = {};
+  const map: PathLastModMap = { ...STATIC_PATH_LASTMOD };
   const insights = getAllInsights();
 
   let latestInsight: string | null = null;

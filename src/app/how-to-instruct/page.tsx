@@ -23,7 +23,7 @@ export default function HowToInstructPage() {
         />
         <h1 className="text-3xl font-bold text-charcoal md:text-4xl">How to instruct us</h1>
         <p className="mt-6 max-w-3xl text-lg text-foreground">
-          Confidential initial discussions for solicitors and counsel. We assess suitability and
+          Confidential initial discussions for legal professionals and counsel. We assess suitability and
           introduce a matched expert from our network - no named expert profiles published before
           instruction.
         </p>

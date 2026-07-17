@@ -26,7 +26,7 @@ export default function AboutPage() {
         <section className="mt-12 max-w-3xl">
           <h2 className="text-xl font-bold text-charcoal">How we work</h2>
           <p className="mt-4 leading-relaxed text-foreground">
-            Solicitors and counsel submit case details confidentially. We assess scope, conflicts and
+            Legal professionals and counsel submit case details confidentially. We assess scope, conflicts and
             suitability, then introduce a qualified forensic accountant or commercial dispute expert
             witness from our network. Experts owe their duty to the court where formally appointed.
           </p>

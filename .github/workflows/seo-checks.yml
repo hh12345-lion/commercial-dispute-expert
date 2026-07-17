@@ -1,6 +1,8 @@
 name: SEO checks
 
 on:
+  push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -26,8 +28,4 @@ jobs:
             exit 1
           )
 
-      - run: npm run seo:verify
-
-      - run: npm run seo:verify:ssr
-
-      - run: npm run seo:verify:canonical
+      - run: npm run seo:verify:all

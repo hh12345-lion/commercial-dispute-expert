@@ -7,7 +7,7 @@ export function StatsTable() {
       <div className="-mx-4 hidden overflow-x-auto px-4 sm:mx-0 sm:px-0 md:block">
         <table className="w-full min-w-[480px] border-collapse text-left text-sm">
           <caption className="mb-3 text-left text-sm font-medium text-charcoal">
-            Commercial dispute expert witness: indicative fees and court frameworks
+            Commercial dispute expert witness: indicative UK market fees and court frameworks
           </caption>
           <thead>
             <tr className="border-b border-border bg-white">
@@ -31,7 +31,7 @@ export function StatsTable() {
       {/* Mobile: stacked cards (no horizontal scroll) */}
       <div className="space-y-3 md:hidden">
         <p className="text-sm font-medium text-charcoal">
-          Commercial dispute expert witness: indicative fees and court frameworks
+          Commercial dispute expert witness: indicative UK market fees and court frameworks
         </p>
         {FORENSIC_INDUSTRY_STATS.map(([metric, figure, source]) => (
           <div
@@ -46,8 +46,8 @@ export function StatsTable() {
       </div>
 
       <p className="mt-4 text-sm leading-relaxed text-foreground/80">
-        Sources: Expert Evidence International; Civil Procedure Rules Part 35 (where applicable).
-        Rates are indicative industry benchmarks only - not a quote from Commercial Dispute Expert.
+        Sources: Expert Evidence International; Civil Procedure Rules Part 35 (English law, where applicable).
+        Rates are indicative UK market benchmarks only — not a quote from Commercial Dispute Expert.
         Actual fees vary by case complexity and expert seniority.
       </p>
     </div>

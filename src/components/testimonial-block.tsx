@@ -1,13 +1,12 @@
 import { siteConfig } from "@/config/site";
 
 export function TestimonialBlock() {
+  if (siteConfig.testimonials.length === 0) return null;
+
   return (
     <section className="py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <h2 className="font-serif text-3xl font-bold text-slate-900">Trusted by legal professionals</h2>
-        <p className="mt-2 text-slate-600">
-          Testimonials below are placeholders - replace with approved quotes before go-live.
-        </p>
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           {siteConfig.testimonials.map((t, i) => (
             <blockquote

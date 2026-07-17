@@ -1,22 +1,19 @@
 # Content replacement guide
 
-Before go-live, replace every `[PLACEHOLDER]` in `src/config/site.ts`:
+The site no longer shows `[PLACEHOLDER]` text publicly. To enrich structured data and legal pages, add verified details to `src/config/site.ts` when available:
 
-| Field | Action |
-|-------|--------|
-| `legalEntityName` | Registered company or trading name |
+| Field | When to add |
+|-------|-------------|
+| `legalEntityName` | Registered company or trading name (currently: Commercial Dispute Expert) |
 | `companyNumber` | Companies House number |
-| `expert.name` | Full name as used in court |
-| `expert.credentials` | Verified qualifications only |
-| `expert.yearsExperience` | Accurate figure |
-| `expert.expertAppointments` | Accurate figure |
-| `expert.bioSummary` | Approved biography |
 | `contact.phone` / `phoneTel` | Working instruction line |
-| `contact.address` | Registered or service address |
-| `regulatoryBodies` | ICAEW/ACCA/PII details |
-| `testimonials` | Signed-off quotes or remove block |
-| `socialLinks.linkedin` | Live profile URL |
+| `contact.address` | Registered or service address (auto-shown on privacy policy) |
+| `socialLinks.linkedin` | Live company LinkedIn URL |
+| `testimonials` | Signed-off quotes (section hidden until array has entries) |
+| `expert.*` | Only if publishing named expert profiles in future |
 
-Also update MDX article `author` frontmatter in `content/insights/*.mdx`.
+Insight articles use the byline **Commercial Dispute Expert Editorial Team**. Change individual `author` fields in `content/insights/*.mdx` when named authors are approved.
 
-Expert page body sections marked `[PLACEHOLDER]` in `src/app/experts/[slug]/page.tsx` should be expanded with real CV content.
+Privacy policy and terms use live config values. Have a solicitor review terms before relying on them in production.
+
+The former `/experts/` route has been removed; expert profiles are not published before instruction.

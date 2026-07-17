@@ -33,7 +33,7 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
 
         <section className="mt-12">
           <h2 className="text-xl font-bold break-words text-charcoal sm:text-2xl">
-            When solicitors instruct us
+            When legal teams instruct us
           </h2>
           <ul className="mt-6 space-y-3">
             {service.whenToInstruct.map((item) => (

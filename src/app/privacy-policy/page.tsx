@@ -1,6 +1,7 @@
 import { Breadcrumb } from "@/components/breadcrumb";
 import { PageContainer } from "@/components/page-container";
 import { buildMetadata } from "@/lib/seo";
+import { isPlaceholder } from "@/lib/seo/placeholders";
 import { siteConfig } from "@/config/site";
 import { PAGE_TITLE_CLASS } from "@/lib/ui-classes";
 
@@ -11,7 +12,16 @@ export const metadata = buildMetadata({
   noIndex: false,
 });
 
+function formatAddress(): string | null {
+  const { line1, line2, country } = siteConfig.contact.address;
+  if (isPlaceholder(line1) || isPlaceholder(line2)) return null;
+  const parts = [line1, line2, isPlaceholder(country) ? null : country].filter(Boolean);
+  return parts.join(", ");
+}
+
 export default function PrivacyPolicyPage() {
+  const registeredAddress = formatAddress();
+
   return (
     <PageContainer>
       <Breadcrumb
@@ -53,9 +63,23 @@ export default function PrivacyPolicyPage() {
           You may request access, correction or deletion of your personal data by contacting{" "}
           {siteConfig.contact.email}. You may complain to the ICO.
         </p>
-        <h2>[PLACEHOLDER] Controller details</h2>
+        <h2>Data controller</h2>
         <p>
-          Replace with registered data controller name, address and DPO contact before go-live.
+          The data controller is {siteConfig.legalEntityName} ({siteConfig.businessName}).
+          {registeredAddress ? (
+            <> Registered address: {registeredAddress}.</>
+          ) : null}{" "}
+          Contact:{" "}
+          <a href={`mailto:${siteConfig.contact.email}`} className="text-brand-green underline">
+            {siteConfig.contact.email}
+          </a>
+          {!isPlaceholder(siteConfig.contact.phone) ? (
+            <> · Phone: {siteConfig.contact.phone}</>
+          ) : null}
+          .
+          {!isPlaceholder(siteConfig.companyNumber) ? (
+            <> Company number: {siteConfig.companyNumber}.</>
+          ) : null}
         </p>
       </div>
     </PageContainer>

@@ -22,7 +22,7 @@ export default function CaseTypesHubPage() {
         />
         <h1 className="text-3xl font-bold text-charcoal md:text-4xl">Case types</h1>
         <p className="mt-4 max-w-3xl text-lg text-foreground">
-          Browse common commercial dispute scenarios where solicitors instruct forensic accountants
+          Browse common commercial dispute scenarios where legal teams instruct forensic accountants
           and commercial dispute expert witnesses.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
