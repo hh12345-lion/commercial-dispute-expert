@@ -10,8 +10,8 @@ export function ContentSection({
   className?: string;
 }) {
   return (
-    <section className={cn("py-12 sm:py-14 md:py-16", alt ? "bg-muted" : "bg-white", className)}>
-      <div className="mx-auto w-full min-w-0 max-w-5xl px-4 sm:px-6 lg:px-8">{children}</div>
+    <section className={cn("py-12 sm:py-14 md:py-16", alt ? "bg-muted" : "bg-background", className)}>
+      <div className="mx-auto w-full min-w-0 max-w-6xl px-4 sm:px-6 lg:px-8">{children}</div>
     </section>
   );
 }

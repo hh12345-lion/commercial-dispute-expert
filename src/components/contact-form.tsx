@@ -5,26 +5,14 @@ import { useState } from "react";
 import { submitContactForm } from "@/app/actions/contact";
 import { siteConfig } from "@/config/site";
 
-const caseTypes = [
-  "Commercial dispute expert witness",
-  "Litigation support",
-  "Loss of profits / quantum",
-  "Breach of contract",
-  "Shareholder / partnership dispute",
-  "Business valuation",
-  "Business interruption",
-  "Professional negligence",
-  "Arbitration / mediation",
-  "Other",
-];
-
 type ContactFormProps = {
   formType?: "contact" | "instruct";
   title?: string;
 };
 
 /**
- * On submit: POST lead (fullName, email, phone) to /api/submit-lead, then send full enquiry via server action.
+ * Minimal lead form: name, email, optional phone and message.
+ * On submit: POST to /api/submit-lead (Sheets + webhook), then email via server action.
  */
 export function ContactForm({ formType = "contact", title }: ContactFormProps) {
   const router = useRouter();
@@ -33,7 +21,7 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
 
   return (
     <form
-      className="relative min-w-0 space-y-6"
+      className="relative min-w-0 space-y-5"
       noValidate
       onSubmit={async (e) => {
         e.preventDefault();
@@ -57,9 +45,9 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
           fullName,
           email,
           phone,
-          lawFirm: String(fd.get("firm") ?? "").trim(),
+          lawFirm: "",
           formType: String(fd.get("formType") ?? "contact").trim(),
-          caseType: String(fd.get("caseType") ?? "").trim(),
+          caseType: "",
           message: String(fd.get("message") ?? "").trim(),
         };
 
@@ -77,9 +65,8 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
             } | null;
             const code = errJson?.error;
 
-            // No Sheets/webhook configured - still allow Resend-only path
             if (leadRes.status === 503 && code === "LEAD_DESTINATION_MISSING") {
-              // continue to email action below
+              // No Sheets/webhook — continue to Resend-only path
             } else if (code === "SHEETS_WRITE_FAILED") {
               setError(
                 "We could not save your submission. Please try again or email us directly.",
@@ -122,137 +109,86 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      {title && (
+      {title ? (
         <h2 className="text-xl font-bold break-words text-charcoal sm:text-2xl">{title}</h2>
-      )}
+      ) : null}
 
       {error ? (
         <div role="alert" className="rounded-lg bg-red-50 p-4 text-sm text-red-900">
           {error}{" "}
           <a
             href={`mailto:${siteConfig.contact.email}`}
-            className="font-medium text-brand-green underline"
+            className="font-medium text-brand-accent underline"
           >
             {siteConfig.contact.email}
           </a>
         </div>
       ) : null}
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-charcoal">
-            Your name *
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            autoComplete="name"
-            className="mt-1 w-full rounded-md border border-border px-4 py-3 focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/20"
-          />
-        </div>
-        <div>
-          <label htmlFor="firm" className="block text-sm font-medium text-charcoal">
-            Law firm / company *
-          </label>
-          <input
-            id="firm"
-            name="firm"
-            type="text"
-            required
-            autoComplete="organization"
-            className="mt-1 w-full rounded-md border border-border px-4 py-3 focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/20"
-          />
-        </div>
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-charcoal">
-            Email *
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            className="mt-1 w-full rounded-md border border-border px-4 py-3 focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/20"
-          />
-        </div>
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-charcoal">
-            Phone
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            className="mt-1 w-full rounded-md border border-border px-4 py-3 focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/20"
-          />
-        </div>
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-charcoal">
+          Your name *
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          autoComplete="name"
+          className="mt-1 w-full rounded-md border border-border bg-surface px-4 py-3 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20"
+        />
       </div>
 
       <div>
-        <label htmlFor="caseType" className="block text-sm font-medium text-charcoal">
-          Case type *
+        <label htmlFor="email" className="block text-sm font-medium text-charcoal">
+          Email *
         </label>
-        <select
-          id="caseType"
-          name="caseType"
+        <input
+          id="email"
+          name="email"
+          type="email"
           required
-          className="mt-1 w-full rounded-md border border-border px-4 py-3 focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/20"
-        >
-          <option value="">Select case type</option>
-          {caseTypes.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
+          autoComplete="email"
+          className="mt-1 w-full rounded-md border border-border bg-surface px-4 py-3 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-charcoal">
+          Phone <span className="font-normal text-foreground/60">(optional)</span>
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          className="mt-1 w-full rounded-md border border-border bg-surface px-4 py-3 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20"
+        />
       </div>
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-charcoal">
-          Message *
+          Message <span className="font-normal text-foreground/60">(optional)</span>
         </label>
         <textarea
           id="message"
           name="message"
-          required
-          rows={6}
+          rows={4}
           placeholder={
             formType === "instruct"
-              ? "Brief description of the dispute, forum, timetable and whether party-appointed or SJE..."
+              ? "Brief overview of the dispute and timetable…"
               : "How can we help?"
           }
-          className="mt-1 w-full rounded-md border border-border px-4 py-3 focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/20"
+          className="mt-1 w-full rounded-md border border-border bg-surface px-4 py-3 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20"
         />
-      </div>
-
-      <div className="flex items-start gap-3">
-        <input
-          id="confidentiality"
-          name="confidentiality"
-          type="checkbox"
-          required
-          value="yes"
-          className="mt-1 h-4 w-4 rounded border-border text-brand-green focus:ring-brand-green"
-        />
-        <label htmlFor="confidentiality" className="text-sm text-foreground/80">
-          I understand this enquiry is confidential and does not create an expert appointment until
-          formally agreed in writing. I am a legal professional or authorised representative. *
-        </label>
       </div>
 
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-md bg-brand-green px-6 py-4 font-medium text-white hover:bg-brand-green/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 disabled:opacity-50 sm:w-auto"
+        className="w-full rounded-md bg-charcoal px-6 py-4 font-medium text-white hover:bg-charcoal/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal focus-visible:ring-offset-2 disabled:opacity-50 sm:w-auto"
       >
-        {pending ? "Sending…" : formType === "instruct" ? "Submit instruction enquiry" : "Send message"}
+        {pending ? "Sending…" : formType === "instruct" ? "Submit enquiry" : "Send message"}
       </button>
     </form>
   );

@@ -24,7 +24,7 @@ export function OrganizationJsonLd() {
     description: siteConfig.connectorPitch,
     url: absoluteUrl("/"),
     email: contact.email,
-    inLanguage: "en",
+    inLanguage: "en-US",
     logo: {
       "@type": "ImageObject",
       url: absoluteUrl(BRAND_LOGO_PATH),
@@ -35,7 +35,7 @@ export function OrganizationJsonLd() {
       "Commercial dispute expert witness",
       "Forensic accounting",
       "Loss of profits quantum",
-      "CPR Part 35 expert reports",
+      "Expert witness reports",
       "Business valuation disputes",
     ],
     serviceType: [
@@ -76,7 +76,7 @@ export function WebSiteJsonLd() {
     name: siteConfig.businessName,
     url: absoluteUrl("/"),
     description: siteConfig.connectorPitch,
-    inLanguage: "en",
+    inLanguage: "en-US",
     publisher: { "@id": `${absoluteUrl("/")}#organization` },
   };
 
@@ -201,7 +201,7 @@ export function ArticleJsonLd({
         image: [imageUrl],
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         url,
-        inLanguage: "en",
+        inLanguage: "en-US",
       }}
     />
   );
@@ -216,10 +216,10 @@ export function BlogJsonLd() {
         "@id": `${absoluteUrl("/insights")}#blog`,
         name: `${siteConfig.businessName} Insights`,
         description:
-          "Articles for legal professionals on commercial dispute expert witnesses, forensic accounting and expert evidence.",
+          "Articles for counsel on commercial dispute expert witnesses, forensic accounting and expert evidence.",
         url: absoluteUrl("/insights"),
         publisher: { "@id": `${absoluteUrl("/")}#organization` },
-        inLanguage: "en",
+        inLanguage: "en-US",
       }}
     />
   );

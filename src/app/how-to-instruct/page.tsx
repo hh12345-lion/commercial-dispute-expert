@@ -9,7 +9,7 @@ import { FileText, Mail, Phone } from "lucide-react";
 export const metadata = buildMetadata({
   title: "How to Instruct a Forensic Expert Witness",
   description:
-    "How to instruct Commercial Dispute Expert: engagement process, documents required and expert witness appointments for legal professionals.",
+    "How to instruct Commercial Dispute Expert: engagement process, documents required and expert witness appointments for counsel.",
   path: "/how-to-instruct",
 });
 
@@ -23,16 +23,17 @@ export default function HowToInstructPage() {
         />
         <h1 className="text-3xl font-bold text-charcoal md:text-4xl">How to instruct us</h1>
         <p className="mt-6 max-w-3xl text-lg text-foreground">
-          Confidential initial discussions for legal professionals and counsel. We assess suitability and
-          introduce a matched expert from our network - no named expert profiles published before
+          Confidential initial discussions for counsel and legal teams. We assess suitability and
+          introduce a matched expert from our network — no named expert profiles published before
           instruction.
         </p>
 
         <section className="mt-12 max-w-3xl">
           <h2 className="text-xl font-bold text-charcoal">Initial enquiry</h2>
           <p className="mt-4 text-foreground">
-            Contact us with a brief overview: dispute type, forum, party-appointed or SJE, quantum
-            issues and deadlines. We confirm conflicts and availability before introduction.
+            Contact us with a brief overview: dispute type, forum, party-appointed or jointly
+            retained expert, quantum issues and deadlines. We confirm conflicts and availability
+            before introduction.
           </p>
         </section>
 
@@ -53,8 +54,8 @@ export default function HowToInstructPage() {
             { icon: Mail, title: "2. Documents", text: "Secure transfer and review." },
             { icon: Phone, title: "3. Expert intro", text: "Matched specialist appointed." },
           ].map(({ icon: Icon, title, text }) => (
-            <div key={title} className="rounded-lg border border-border bg-white p-6">
-              <Icon className="h-6 w-6 text-brand-green" aria-hidden />
+            <div key={title} className="rounded-lg border border-border bg-surface p-6">
+              <Icon className="h-6 w-6 text-brand-accent" aria-hidden />
               <h3 className="mt-4 font-semibold text-charcoal">{title}</h3>
               <p className="mt-2 text-sm text-foreground">{text}</p>
             </div>
@@ -63,12 +64,12 @@ export default function HowToInstructPage() {
 
         <p className="mt-8 text-foreground">
           Email:{" "}
-          <a href={`mailto:${siteConfig.contact.email}`} className="font-medium text-brand-green">
+          <a href={`mailto:${siteConfig.contact.email}`} className="font-medium text-brand-accent">
             {siteConfig.contact.email}
           </a>
         </p>
 
-        <section className="mt-16 max-w-2xl">
+        <section className="mt-16 max-w-lg rounded-xl border border-border bg-surface p-6 sm:p-8">
           <ContactForm formType="instruct" title="Submit an instruction enquiry" />
         </section>
       </ContentSection>

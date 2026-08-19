@@ -10,10 +10,15 @@ export function ServiceCard({ title, description, href }: ServiceCardProps) {
   return (
     <Link
       href={href}
-      className="flex min-h-[44px] flex-col rounded-lg border border-border bg-white p-5 shadow-sm transition hover:border-brand-green/30"
+      className="group flex min-h-[44px] flex-col rounded-lg border border-border bg-surface p-6 transition hover:border-brand-accent/40 hover:shadow-sm"
     >
-      <h3 className="font-semibold break-words text-charcoal">{title}</h3>
+      <h3 className="font-semibold break-words text-charcoal group-hover:text-brand-accent">
+        {title}
+      </h3>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground">{description}</p>
+      <span className="mt-4 text-xs font-semibold uppercase tracking-wide text-brand-accent">
+        Learn more →
+      </span>
     </Link>
   );
 }

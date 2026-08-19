@@ -11,16 +11,16 @@ export const siteConfig = {
   brandShort: "CommercialDisputeExpert",
   tagline: "Commercial disputes. Financial clarity. Court-ready evidence.",
   connectorPitch:
-    "CommercialDisputeExpert.com connects legal professionals, counsel and law firms worldwide with qualified commercial dispute expert witnesses — forensic accounting, quantum analysis and court-ready expert reports under English law and international forums.",
+    "CommercialDisputeExpert.com connects counsel and law firms with qualified commercial dispute expert witnesses — forensic accounting, quantum analysis and court-ready expert reports for litigation and arbitration.",
   description:
-    "We connect legal professionals with independent commercial dispute expert witnesses and forensic accountants for litigation and arbitration. Not a law firm - we do not provide legal advice.",
+    "We connect counsel with independent commercial dispute expert witnesses and forensic accountants for litigation and arbitration. Not a law firm — we do not provide legal advice.",
 
   expert: {
     slug: "network",
     name: "Commercial Dispute Expert network",
     title: "Commercial Dispute Expert Witness",
     credentials: [] as string[],
-    jurisdictions: ["Courts and tribunals", "International arbitration"],
+    jurisdictions: ["State and federal courts", "International arbitration"],
     yearsExperience: "",
     expertAppointments: "",
     bioSummary: "",
@@ -34,7 +34,7 @@ export const siteConfig = {
     address: {
       line1: "",
       line2: "",
-      country: "",
+      country: "US",
     },
   },
 
@@ -107,7 +107,7 @@ export const siteConfig = {
       {
         title: "Expert Reports & Testimony",
         href: "/services/expert-reports-testimony",
-        description: "CPR Part 35 reports, joint statements and court attendance.",
+        description: "Expert reports, joint statements and court attendance.",
       },
       {
         title: "Arbitration & Mediation",

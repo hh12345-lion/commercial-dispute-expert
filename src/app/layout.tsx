@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Source_Sans_3 } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ConsentDefaultsScript } from "@/components/cookies/consent-defaults-script";
@@ -9,9 +9,9 @@ import { siteConfig } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
 import "./globals.css";
 
-const sourceSans = Source_Sans_3({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-source-sans",
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
@@ -44,16 +44,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-US">
       <body
-        className={`${sourceSans.variable} min-h-screen min-w-0 overflow-x-clip antialiased`}
+        className={`${dmSans.variable} flex min-h-screen min-w-0 flex-col overflow-x-clip antialiased`}
       >
         <ConsentDefaultsScript />
         <CookieConsentRoot>
           <OrganizationJsonLd />
           <WebSiteJsonLd />
           <Header />
-          <main id="main-content" className="min-h-[60vh]">
+          <main id="main-content" className="min-h-[60vh] flex-1">
             {children}
           </main>
           <Footer />

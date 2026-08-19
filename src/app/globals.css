@@ -1,12 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #334155;
-  --charcoal: #1c2b3a;
-  --brand-green: #1b5e20;
+  --background: #f8fafc;
+  --foreground: #475569;
+  --charcoal: #0f172a;
+  --brand-accent: #0d9488;
+  --brand-green: var(--brand-accent);
   --muted: #f1f5f9;
   --border: #e2e8f0;
+  --surface: #ffffff;
+  --accent-line: #14b8a6;
 }
 
 @theme inline {
@@ -14,9 +17,11 @@
   --color-foreground: var(--foreground);
   --color-charcoal: var(--charcoal);
   --color-brand-green: var(--brand-green);
+  --color-brand-accent: var(--brand-accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --font-sans: var(--font-source-sans);
+  --color-surface: var(--surface);
+  --font-sans: var(--font-dm-sans);
 }
 
 html {
@@ -32,7 +37,6 @@ body {
   overflow-x: clip;
 }
 
-/* Long emails/URLs in content and forms */
 #main-content {
   min-width: 0;
 }
@@ -100,11 +104,10 @@ body {
 }
 
 .prose-cde a {
-  color: var(--brand-green);
+  color: var(--brand-accent);
   text-decoration: underline;
 }
 
-/* Cookie consent — GPU-friendly transforms to avoid CLS */
 @keyframes cde-cookie-slide-up {
   from {
     opacity: 0;
