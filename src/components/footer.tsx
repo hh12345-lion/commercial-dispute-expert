@@ -2,75 +2,79 @@ import Link from "next/link";
 import { CookieSettingsButton } from "@/components/cookies/cookie-settings-button";
 import { siteConfig } from "@/config/site";
 
-const footerLinks = [
-  { href: "/services", label: "Services" },
-  { href: "/case-types", label: "Case types" },
-  { href: "/insights", label: "Insights" },
-  { href: "/how-to-instruct", label: "How to instruct" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+const browseLinks = [
+  { href: "/services", label: "services" },
+  { href: "/case-types", label: "case types" },
+  { href: "/insights", label: "insights" },
+  { href: "/how-to-instruct", label: "how to instruct" },
+  { href: "/about", label: "about" },
+  { href: "/contact", label: "contact" },
 ] as const;
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-border bg-surface">
-      <div
-        className="h-px w-full bg-gradient-to-r from-transparent via-brand-accent/50 to-transparent"
-        aria-hidden
-      />
-
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-sm">
-            <p className="text-base font-bold text-charcoal">{siteConfig.businessName}</p>
-            <p className="mt-2 text-sm leading-relaxed text-foreground">
-              {siteConfig.description}
-            </p>
-            <p className="mt-4 text-sm">
-              <a
-                href={`mailto:${siteConfig.contact.email}`}
-                className="font-medium text-brand-accent hover:underline"
-              >
-                {siteConfig.contact.email}
-              </a>
-            </p>
-          </div>
-
-          <nav
-            aria-label="Footer"
-            className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-foreground lg:max-w-md lg:justify-end"
-          >
-            {footerLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="min-h-[44px] py-2 hover:text-charcoal"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-foreground/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {siteConfig.businessName}. All rights reserved.
+    <footer className="mt-auto bg-charcoal text-white/75">
+      {/* Prose-style browse line — not columns, not chips, not numbered index */}
+      <div className="border-b border-white/10 px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-white/40">
+            Browse
           </p>
-          <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <Link href="/privacy-policy" className="hover:text-charcoal">
+          <p className="mt-4 text-base leading-loose text-white/85 sm:text-lg">
+            Explore our{" "}
+            {browseLinks.map((link, index) => (
+              <span key={link.href}>
+                {index > 0 && index < browseLinks.length - 1 ? ", " : null}
+                {index === browseLinks.length - 1 && index > 0 ? ", and " : null}
+                <Link
+                  href={link.href}
+                  className="font-medium text-white underline decoration-brand-accent decoration-2 underline-offset-[6px] transition hover:text-brand-accent"
+                >
+                  {link.label}
+                </Link>
+              </span>
+            ))}
+            .
+          </p>
+        </div>
+      </div>
+
+      {/* Contact as footer focal point — not a sidebar card or brand blurb column */}
+      <div className="border-b border-white/10 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-white/40">
+            Direct line
+          </p>
+          <a
+            href={`mailto:${siteConfig.contact.email}`}
+            className="mt-4 block break-all text-xl font-semibold text-white transition hover:text-brand-accent sm:text-2xl"
+          >
+            {siteConfig.contact.email}
+          </a>
+          <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-white/55">
+            {siteConfig.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Legal ledger — single compact row */}
+      <div className="px-4 py-5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} {siteConfig.businessName}
+          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link href="/privacy-policy" className="transition hover:text-white">
               Privacy
             </Link>
-            <span aria-hidden>·</span>
-            <Link href="/terms" className="hover:text-charcoal">
+            <Link href="/terms" className="transition hover:text-white">
               Terms
             </Link>
-            <span aria-hidden>·</span>
-            <Link href="/cookie-policy" className="hover:text-charcoal">
+            <Link href="/cookie-policy" className="transition hover:text-white">
               Cookies
             </Link>
-            <span aria-hidden>·</span>
-            <CookieSettingsButton className="hover:text-charcoal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent" />
-          </p>
+            <CookieSettingsButton className="transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent" />
+          </div>
         </div>
       </div>
     </footer>
