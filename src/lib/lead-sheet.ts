@@ -1,5 +1,5 @@
 import { appendRow, isGoogleSheetsConfigured } from "@/lib/google-sheets";
-import { LEAD_BRAND_NAME } from "@/lib/lead-webhook";
+import { LEAD_BRAND_NAME } from "@/lib/leadNotification";
 
 /** Contact form fields persisted to Google Sheets (column order = row 1 headers). */
 export type LeadFields = {

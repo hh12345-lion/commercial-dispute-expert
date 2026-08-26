@@ -11,8 +11,8 @@ type ContactFormProps = {
 };
 
 /**
- * Minimal lead form: name, email, optional phone and message.
- * On submit: POST to /api/submit-lead (Sheets + webhook), then email via server action.
+ * Minimal lead form. On submit: email via server action, then fire-and-forget
+ * /api/submit-lead (n8n webhook). Instruct enquiries also POST /api/instruct (Sheets).
  */
 export function ContactForm({ formType = "contact", title }: ContactFormProps) {
   const router = useRouter();
@@ -34,6 +34,10 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
         const fullName = String(fd.get("name") ?? "").trim();
         const email = String(fd.get("email") ?? "").trim();
         const phone = String(fd.get("phone") ?? "").trim();
+        const message = String(fd.get("message") ?? "").trim();
+        const resolvedFormType = String(fd.get("formType") ?? "contact").trim() as
+          | "contact"
+          | "instruct";
 
         if (!fullName || !email) {
           setError("Please enter your name and email.");
@@ -41,59 +45,37 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
           return;
         }
 
-        const leadPayload = {
-          fullName,
-          email,
-          phone,
-          lawFirm: "",
-          formType: String(fd.get("formType") ?? "contact").trim(),
-          caseType: "",
-          message: String(fd.get("message") ?? "").trim(),
-        };
-
         try {
-          const leadRes = await fetch("/api/submit-lead", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(leadPayload),
-          });
-
-          if (!leadRes.ok) {
-            const errJson = (await leadRes.json().catch(() => null)) as {
-              error?: string;
-              message?: string;
-            } | null;
-            const code = errJson?.error;
-
-            if (leadRes.status === 503 && code === "LEAD_DESTINATION_MISSING") {
-              // No Sheets/webhook — continue to Resend-only path
-            } else if (code === "SHEETS_WRITE_FAILED") {
-              setError(
-                "We could not save your submission. Please try again or email us directly.",
-              );
-              setPending(false);
-              return;
-            } else if (code === "WEBHOOK_UNREACHABLE" || code === "WEBHOOK_REJECTED") {
-              setError(
-                "We could not notify our team right now. Please try again or email us directly.",
-              );
-              setPending(false);
-              return;
-            } else if (leadRes.status !== 503) {
-              setError(
-                errJson?.message ||
-                  "Something went wrong. Please try again or email us directly.",
-              );
-              setPending(false);
-              return;
-            }
-          }
-
           const emailResult = await submitContactForm(fd);
           if (!emailResult.ok) {
             setError(emailResult.message);
             setPending(false);
             return;
+          }
+
+          void fetch("/api/submit-lead", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              fullName,
+              email,
+              phone: phone || "",
+              formType: resolvedFormType,
+            }),
+          }).catch(() => {});
+
+          if (resolvedFormType === "instruct") {
+            void fetch("/api/instruct", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                fullName,
+                email,
+                phone: phone || "",
+                message,
+                formType: "instruct",
+              }),
+            }).catch(() => {});
           }
 
           router.push(emailResult.thankYouPath);

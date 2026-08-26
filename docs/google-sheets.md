@@ -1,6 +1,6 @@
-# Contact form → Google Sheets
+# Instruction form → Google Sheets
 
-Each successful `/api/submit-lead` submission appends one row when Google Sheets env vars are set.
+Each successful **`/api/instruct`** submission (how-to-instruct form only) appends one row when Google Sheets env vars are set. Contact form submissions do not write to Sheets.
 
 ## Spreadsheet header row (row 1 on tab `Sheet8`)
 
@@ -41,4 +41,5 @@ npx tsx scripts/test-sheets.ts
 
 ## Production routing
 
-`/api/submit-lead` is handled by the **Next.js route** (`src/app/api/submit-lead/route.ts`) so Sheets + webhook run together. The Netlify function redirect in `netlify.toml` is commented out for this reason.
+- **`/api/submit-lead`** → Netlify function → n8n webhook (see `Lead_notification_setup.md`)
+- **`/api/instruct`** → Next.js route → Google Sheets (instruction enquiries only)

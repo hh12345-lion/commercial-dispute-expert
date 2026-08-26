@@ -8,6 +8,17 @@ import {
 
 const siteUrl = siteConfig.domain.replace(/\/$/, "");
 
+/** Hostname for n8n webhook `domain` field — no protocol, no www. */
+export function getSiteDomain(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.domain;
+  try {
+    const url = raw.startsWith("http") ? raw : `https://${raw}`;
+    return new URL(url).hostname.replace(/^www\./i, "");
+  } catch {
+    return "commercialdisputeexpert.com";
+  }
+}
+
 /** Canonical URL — homepage has no trailing slash (matches sitemap) */
 export function absoluteUrl(path: string): string {
   if (path === "/" || path === "") return siteUrl;
