@@ -74,15 +74,16 @@ export async function appendLeadToGoogleSheet(lead: LeadFields): Promise<void> {
   await appendRow(buildLeadSheetRow(lead));
 }
 
-/** Soft-fail wrapper — logs and never throws. */
+/** Soft-fail wrapper — logs and never throws. Returns whether a row was written. */
 export async function writeLeadToSheetSafely(
   lead: LeadFields,
   context: string
-): Promise<void> {
-  if (!isGoogleSheetsConfigured()) return;
+): Promise<boolean> {
+  if (!isGoogleSheetsConfigured()) return false;
 
   try {
     await appendLeadToGoogleSheet(lead);
+    return true;
   } catch (error: unknown) {
     const err = error as { message?: string; code?: number };
     console.error("Google Sheets error (soft-fail):", {
@@ -90,7 +91,9 @@ export async function writeLeadToSheetSafely(
       message: err?.message,
       code: err?.code,
       spreadsheetId: `${process.env.GOOGLE_SHEET_ID?.slice(0, 8)}...`,
+      tab: process.env.GOOGLE_SHEET_TAB_NAME || "Sheet1",
       timestamp: new Date().toISOString(),
     });
+    return false;
   }
 }

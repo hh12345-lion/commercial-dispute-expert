@@ -57,10 +57,21 @@ export async function POST(request: Request) {
     );
   }
 
-  // Soft-fail Sheets — never block the user; webhook is primary via /api/submit-lead.
-  if (isGoogleSheetsConfigured()) {
-    await writeLeadToSheetSafely(lead, `instruct-${formType}`);
+  if (!isGoogleSheetsConfigured()) {
+    console.warn(
+      "[instruct] Google Sheets env vars missing — skipping sheet write",
+    );
+    return NextResponse.json({
+      ok: true,
+      writtenToSheet: false,
+      warning: "Google Sheets is not configured",
+    });
   }
 
-  return NextResponse.json({ ok: true });
+  const writtenToSheet = await writeLeadToSheetSafely(
+    lead,
+    `instruct-${formType}`,
+  );
+
+  return NextResponse.json({ ok: true, writtenToSheet });
 }

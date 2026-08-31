@@ -72,18 +72,23 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
             return;
           }
 
-          // Soft-fail Sheets — one shared tab + Form Type for contact and instruct.
-          void fetch("/api/instruct", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              fullName,
-              email,
-              phone: phone || "",
-              message,
-              formType: resolvedFormType,
-            }),
-          }).catch(() => {});
+          // Await Sheets so navigation does not cancel the write.
+          try {
+            await fetch("/api/instruct", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                fullName,
+                email,
+                phone: phone || "",
+                message,
+                formType: resolvedFormType,
+              }),
+              keepalive: true,
+            });
+          } catch {
+            /* Sheets soft-fail — webhook already accepted the lead */
+          }
 
           router.push(emailResult.thankYouPath);
         } catch {
