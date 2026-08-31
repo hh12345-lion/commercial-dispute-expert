@@ -1,22 +1,22 @@
-# Instruction form → Google Sheets
+# Contact / instruct forms → Google Sheets
 
-Each successful **`/api/instruct`** submission (how-to-instruct form only) appends one row when Google Sheets env vars are set. Contact form submissions do not write to Sheets.
+Each successful form submission soft-appends one row to a **single shared tab** when Google Sheets env vars are set. **Form Type** distinguishes Contact vs Instruct. Sheet failures never block the user — the n8n webhook via `/api/submit-lead` is primary.
 
-## Spreadsheet header row (row 1 on tab `Sheet8`)
+## Spreadsheet header row (row 1 on `GOOGLE_SHEET_TAB_NAME`)
 
-Create these columns **in this exact order** (columns A–I):
+Create these columns **in this exact order**:
 
 | Col | Header name |
 |-----|-------------|
 | A | Timestamp |
-| B | Full Name |
-| C | Email |
-| D | Phone Number |
-| E | Law Firm |
-| F | Form Type |
-| G | Case Type |
-| H | Message |
-| I | Brand name |
+| B | Brand |
+| C | Form Type |
+| D | Full Name |
+| E | Email |
+| F | Phone Number |
+| G | Law Firm |
+| H | Case Type |
+| I | Message |
 
 Share the spreadsheet with your service account email as **Editor** (uncheck “Notify people”).
 
@@ -41,5 +41,5 @@ npx tsx scripts/test-sheets.ts
 
 ## Production routing
 
-- **`/api/submit-lead`** → Netlify function → n8n webhook (see `Lead_notification_setup.md`)
-- **`/api/instruct`** → Next.js route → Google Sheets (instruction enquiries only)
+- **`/api/submit-lead`** → Netlify function → n8n webhook (see `Lead_notification_setup.md`) — **primary**
+- **`/api/instruct`** → Next.js route → Google Sheets soft-fail (shared tab + Form Type)

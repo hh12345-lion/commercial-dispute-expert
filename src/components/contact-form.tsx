@@ -11,8 +11,8 @@ type ContactFormProps = {
 };
 
 /**
- * Minimal lead form. On submit: email via server action, then fire-and-forget
- * /api/submit-lead (n8n webhook). Instruct enquiries also POST /api/instruct (Sheets).
+ * On submit: webhook primary (/api/submit-lead), soft-fail email, soft-fail Sheets
+ * (/api/instruct) on one shared tab with Form Type.
  */
 export function ContactForm({ formType = "contact", title }: ContactFormProps) {
   const router = useRouter();
@@ -46,14 +46,8 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
         }
 
         try {
-          const emailResult = await submitContactForm(fd);
-          if (!emailResult.ok) {
-            setError(emailResult.message);
-            setPending(false);
-            return;
-          }
-
-          void fetch("/api/submit-lead", {
+          // Webhook primary — hard-fail only if notification endpoint rejects.
+          const webhookRes = await fetch("/api/submit-lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -62,21 +56,34 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
               phone: phone || "",
               formType: resolvedFormType,
             }),
-          }).catch(() => {});
+          });
 
-          if (resolvedFormType === "instruct") {
-            void fetch("/api/instruct", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                fullName,
-                email,
-                phone: phone || "",
-                message,
-                formType: "instruct",
-              }),
-            }).catch(() => {});
+          if (!webhookRes.ok) {
+            setError("Unable to send your enquiry. Please try again or email us.");
+            setPending(false);
+            return;
           }
+
+          // Soft-fail email (server action never blocks on Resend failure).
+          const emailResult = await submitContactForm(fd);
+          if (!emailResult.ok) {
+            setError(emailResult.message);
+            setPending(false);
+            return;
+          }
+
+          // Soft-fail Sheets — one shared tab + Form Type for contact and instruct.
+          void fetch("/api/instruct", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              fullName,
+              email,
+              phone: phone || "",
+              message,
+              formType: resolvedFormType,
+            }),
+          }).catch(() => {});
 
           router.push(emailResult.thankYouPath);
         } catch {

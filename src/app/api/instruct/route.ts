@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { isGoogleSheetsConfigured } from "@/lib/google-sheets";
-import { appendLeadToGoogleSheet, type LeadFields } from "@/lib/lead-sheet";
+import {
+  writeLeadToSheetSafely,
+  type LeadFields,
+} from "@/lib/lead-sheet";
 
 type InstructBody = {
   fullName?: unknown;
@@ -9,6 +12,8 @@ type InstructBody = {
   phone?: unknown;
   message?: unknown;
   formType?: unknown;
+  lawFirm?: unknown;
+  caseType?: unknown;
 };
 
 function trimField(v: unknown, max = 8000): string {
@@ -21,7 +26,8 @@ export async function OPTIONS() {
 }
 
 /**
- * POST /api/instruct — Google Sheets row for instruction enquiries only.
+ * POST /api/instruct — Google Sheets row (one shared tab + Form Type).
+ * Soft-fails Sheets so the client webhook path remains primary.
  */
 export async function POST(request: Request) {
   let body: InstructBody;
@@ -31,13 +37,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
+  const formTypeRaw = trimField(body.formType, 40).toLowerCase();
+  const formType = formTypeRaw === "instruct" ? "instruct" : "contact";
+
   const lead: LeadFields = {
     fullName: trimField(body.fullName ?? body.full_name, 300),
     email: trimField(body.email, 320),
     phone: trimField(body.phone, 80),
-    lawFirm: "",
-    formType: "instruct",
-    caseType: "",
+    lawFirm: trimField(body.lawFirm, 300),
+    formType,
+    caseType: trimField(body.caseType, 300),
     message: trimField(body.message, 8000),
   };
 
@@ -48,30 +57,9 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!isGoogleSheetsConfigured()) {
-    return NextResponse.json(
-      {
-        error: "SHEETS_NOT_CONFIGURED",
-        message:
-          "Configure GOOGLE_SHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, and GOOGLE_PRIVATE_KEY.",
-      },
-      { status: 503 },
-    );
-  }
-
-  try {
-    await appendLeadToGoogleSheet(lead);
-  } catch (error: unknown) {
-    const err = error as { message?: string; code?: number };
-    console.error("Google Sheets error:", {
-      message: err?.message,
-      code: err?.code,
-      timestamp: new Date().toISOString(),
-    });
-    return NextResponse.json(
-      { error: "SHEETS_WRITE_FAILED", message: "Could not save your submission." },
-      { status: 502 },
-    );
+  // Soft-fail Sheets — never block the user; webhook is primary via /api/submit-lead.
+  if (isGoogleSheetsConfigured()) {
+    await writeLeadToSheetSafely(lead, `instruct-${formType}`);
   }
 
   return NextResponse.json({ ok: true });

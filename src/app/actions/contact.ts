@@ -15,7 +15,10 @@ export type ContactSubmitResult =
   | { ok: true; thankYouPath: string; skipped?: boolean }
   | { ok: false; message: string };
 
-/** Sends the enquiry via Resend (or logs in dev). Lead webhook is handled client-side first. */
+/**
+ * Soft-fail email via Resend (or logs in dev).
+ * Lead webhook is primary and is fired client-side via /api/submit-lead.
+ */
 export async function submitContactForm(formData: FormData): Promise<ContactSubmitResult> {
   const raw = {
     name: formData.get("name"),
@@ -73,24 +76,15 @@ ${data.message?.trim() || "(none provided)"}
         }),
       });
       if (!res.ok) {
-        console.error("Resend error", await res.text());
-        return {
-          ok: false,
-          message:
-            "Unable to send your message. Please email contact@commercialdisputeexpert.com directly.",
-        };
+        console.error("Resend error (soft-fail):", await res.text());
       }
     } catch (e) {
-      console.error("Resend fetch failed", e);
-      return {
-        ok: false,
-        message:
-          "Unable to send your message. Please email contact@commercialdisputeexpert.com directly.",
-      };
+      console.error("Resend fetch failed (soft-fail):", e);
     }
   } else {
     console.info("[Contact form submission]", { subject, body });
   }
 
+  // Soft-fail email: validation passed → treat as success so webhook path is not blocked.
   return { ok: true, thankYouPath };
 }
