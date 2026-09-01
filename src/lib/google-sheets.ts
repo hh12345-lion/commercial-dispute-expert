@@ -16,15 +16,43 @@ function normalizePrivateKey(raw: string | undefined): string | undefined {
   ) {
     key = key.slice(1, -1);
   }
-  return key.replace(/\\n/g, "\n");
+  key = key.replace(/\\n/g, "\n");
+  if (!key.includes("BEGIN PRIVATE KEY") && /^[A-Za-z0-9+/=\s]+$/.test(key)) {
+    try {
+      const decoded = Buffer.from(key.replace(/\s/g, ""), "base64").toString("utf8");
+      if (decoded.includes("BEGIN PRIVATE KEY")) {
+        key = decoded;
+      }
+    } catch {
+      /* not base64 */
+    }
+  }
+  return key;
+}
+
+/** Which env vars are missing — safe to log (names only). */
+export function getGoogleSheetsConfigStatus(): {
+  configured: boolean;
+  missing: string[];
+} {
+  const missing: string[] = [];
+  if (!process.env.GOOGLE_SHEET_ID?.trim()) missing.push("GOOGLE_SHEET_ID");
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL?.trim()) {
+    missing.push("GOOGLE_SERVICE_ACCOUNT_EMAIL");
+  }
+  if (!process.env.GOOGLE_PRIVATE_KEY?.trim()) missing.push("GOOGLE_PRIVATE_KEY");
+  return { configured: missing.length === 0, missing };
+}
+
+function quoteSheetName(name: string): string {
+  if (/[^A-Za-z0-9_]/.test(name)) {
+    return `'${name.replace(/'/g, "''")}'`;
+  }
+  return name;
 }
 
 function getSheetsConfigured(): boolean {
-  return Boolean(
-    process.env.GOOGLE_SHEET_ID &&
-      process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
-      process.env.GOOGLE_PRIVATE_KEY,
-  );
+  return getGoogleSheetsConfigStatus().configured;
 }
 
 function getAuthClient() {
@@ -61,7 +89,7 @@ export async function appendRow(
 
   const response = await sheets.spreadsheets.values.append({
     spreadsheetId: spreadsheetId!,
-    range: `${sheetName}!A:A`,
+    range: `${quoteSheetName(sheetName)}!A:A`,
     valueInputOption: "USER_ENTERED",
     insertDataOption: "INSERT_ROWS",
     requestBody: {

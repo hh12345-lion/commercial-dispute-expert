@@ -11,8 +11,8 @@ type ContactFormProps = {
 };
 
 /**
- * On submit: webhook primary (/api/submit-lead), soft-fail email, soft-fail Sheets
- * (/api/instruct) on one shared tab with Form Type.
+ * On submit: webhook primary (/api/submit-lead), soft-fail email + Google Sheets
+ * (server action) on one shared tab with Form Type.
  */
 export function ContactForm({ formType = "contact", title }: ContactFormProps) {
   const router = useRouter();
@@ -72,22 +72,10 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
             return;
           }
 
-          // Await Sheets so navigation does not cancel the write.
-          try {
-            await fetch("/api/instruct", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                fullName,
-                email,
-                phone: phone || "",
-                message,
-                formType: resolvedFormType,
-              }),
-              keepalive: true,
-            });
-          } catch {
-            /* Sheets soft-fail — webhook already accepted the lead */
+          if (emailResult.sheetWritten === false && process.env.NODE_ENV === "development") {
+            console.warn(
+              "[ContactForm] Google Sheets row was not written — check Netlify function logs for [Google Sheets] messages.",
+            );
           }
 
           router.push(emailResult.thankYouPath);

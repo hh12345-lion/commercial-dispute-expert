@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { isGoogleSheetsConfigured } from "@/lib/google-sheets";
+import { getGoogleSheetsConfigStatus } from "@/lib/google-sheets";
 import {
   writeLeadToSheetSafely,
   type LeadFields,
@@ -27,7 +27,7 @@ export async function OPTIONS() {
 
 /**
  * POST /api/instruct — Google Sheets row (one shared tab + Form Type).
- * Soft-fails Sheets so the client webhook path remains primary.
+ * Prefer server action write; this route remains for direct/testing use.
  */
 export async function POST(request: Request) {
   let body: InstructBody;
@@ -57,21 +57,25 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!isGoogleSheetsConfigured()) {
+  const config = getGoogleSheetsConfigStatus();
+  if (!config.configured) {
     console.warn(
-      "[instruct] Google Sheets env vars missing — skipping sheet write",
+      "[instruct] Google Sheets env vars missing:",
+      config.missing.join(", "),
     );
     return NextResponse.json({
       ok: true,
       writtenToSheet: false,
       warning: "Google Sheets is not configured",
+      missingEnv: config.missing,
     });
   }
 
-  const writtenToSheet = await writeLeadToSheetSafely(
-    lead,
-    `instruct-${formType}`,
-  );
+  const writtenToSheet = await writeLeadToSheetSafely(lead, `api-instruct-${formType}`);
 
-  return NextResponse.json({ ok: true, writtenToSheet });
+  return NextResponse.json({
+    ok: true,
+    writtenToSheet,
+    ...(writtenToSheet ? {} : { warning: "Sheet write failed — see server logs" }),
+  });
 }

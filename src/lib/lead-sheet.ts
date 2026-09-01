@@ -1,4 +1,4 @@
-import { appendRow, isGoogleSheetsConfigured } from "@/lib/google-sheets";
+import { appendRow, getGoogleSheetsConfigStatus, isGoogleSheetsConfigured } from "@/lib/google-sheets";
 import { LEAD_BRAND_NAME } from "@/lib/leadNotification";
 
 /** Contact/instruct fields persisted to Google Sheets (column order = row 1 headers). */
@@ -66,32 +66,61 @@ export function buildLeadSheetRow(lead: LeadFields): (string | null)[] {
  * Appends a lead row when Google Sheets env vars are set.
  * Throws on API errors — callers should catch so webhook success is not blocked.
  */
-export async function appendLeadToGoogleSheet(lead: LeadFields): Promise<void> {
+export async function appendLeadToGoogleSheet(
+  lead: LeadFields,
+): Promise<{ updatedRange: string | null | undefined }> {
   if (!isGoogleSheetsConfigured()) {
-    return;
+    throw new Error("Google Sheets env vars are not configured");
   }
 
-  await appendRow(buildLeadSheetRow(lead));
+  return appendRow(buildLeadSheetRow(lead));
+}
+
+function formatSheetsError(error: unknown): string {
+  const err = error as {
+    message?: string;
+    code?: number;
+    response?: { data?: { error?: { message?: string; status?: string } } };
+    errors?: { message?: string }[];
+  };
+  const apiMessage =
+    err.response?.data?.error?.message ||
+    err.errors?.[0]?.message ||
+    err.message ||
+    "Unknown Google Sheets error";
+  return apiMessage;
 }
 
 /** Soft-fail wrapper — logs and never throws. Returns whether a row was written. */
 export async function writeLeadToSheetSafely(
   lead: LeadFields,
-  context: string
+  context: string,
 ): Promise<boolean> {
-  if (!isGoogleSheetsConfigured()) return false;
+  const { configured, missing } = getGoogleSheetsConfigStatus();
+
+  if (!configured) {
+    console.warn("[Google Sheets] Skipped — missing env vars:", missing.join(", "), {
+      context,
+    });
+    return false;
+  }
 
   try {
-    await appendLeadToGoogleSheet(lead);
+    const result = await appendLeadToGoogleSheet(lead);
+    console.info("[Google Sheets] Row appended:", {
+      context,
+      range: result.updatedRange,
+      tab: process.env.GOOGLE_SHEET_TAB_NAME || "Sheet1",
+      formType: lead.formType,
+    });
     return true;
   } catch (error: unknown) {
-    const err = error as { message?: string; code?: number };
-    console.error("Google Sheets error (soft-fail):", {
+    console.error("[Google Sheets] Write failed:", {
       context,
-      message: err?.message,
-      code: err?.code,
+      message: formatSheetsError(error),
       spreadsheetId: `${process.env.GOOGLE_SHEET_ID?.slice(0, 8)}...`,
       tab: process.env.GOOGLE_SHEET_TAB_NAME || "Sheet1",
+      serviceAccount: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       timestamp: new Date().toISOString(),
     });
     return false;

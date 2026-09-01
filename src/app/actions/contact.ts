@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { writeLeadToSheetSafely } from "@/lib/lead-sheet";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -12,12 +13,11 @@ const contactSchema = z.object({
 });
 
 export type ContactSubmitResult =
-  | { ok: true; thankYouPath: string; skipped?: boolean }
+  | { ok: true; thankYouPath: string; skipped?: boolean; sheetWritten?: boolean }
   | { ok: false; message: string };
 
 /**
- * Soft-fail email via Resend (or logs in dev).
- * Lead webhook is primary and is fired client-side via /api/submit-lead.
+ * Soft-fail email + Google Sheets. Lead webhook is primary (client /api/submit-lead).
  */
 export async function submitContactForm(formData: FormData): Promise<ContactSubmitResult> {
   const raw = {
@@ -85,6 +85,18 @@ ${data.message?.trim() || "(none provided)"}
     console.info("[Contact form submission]", { subject, body });
   }
 
-  // Soft-fail email: validation passed → treat as success so webhook path is not blocked.
-  return { ok: true, thankYouPath };
+  const sheetWritten = await writeLeadToSheetSafely(
+    {
+      fullName: data.name,
+      email: data.email,
+      phone: data.phone || "",
+      lawFirm: "",
+      formType: data.formType || "contact",
+      caseType: "",
+      message: data.message || "",
+    },
+    `contact-form-${data.formType || "contact"}`,
+  );
+
+  return { ok: true, thankYouPath, sheetWritten };
 }
