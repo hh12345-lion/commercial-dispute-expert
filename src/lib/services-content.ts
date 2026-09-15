@@ -521,7 +521,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "Which arbitral seats do you support?",
         answer:
-          "London-seated arbitrations are common in our practice; other seats can be discussed at instruction.",
+          "US-seated arbitrations are common in our practice; other seats can be discussed at instruction.",
       },
       {
         question: "Do you act as arbitrator?",

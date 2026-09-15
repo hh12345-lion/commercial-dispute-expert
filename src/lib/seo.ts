@@ -70,7 +70,7 @@ export function buildMetadata({
         },
     openGraph: {
       type: path.startsWith("/insights/") ? "article" : "website",
-      locale: "en",
+      locale: "en_US",
       url,
       siteName: siteConfig.businessName,
       title: fullTitle,

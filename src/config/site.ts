@@ -11,9 +11,9 @@ export const siteConfig = {
   brandShort: "CommercialDisputeExpert",
   tagline: "Commercial disputes. Financial clarity. Court-ready evidence.",
   connectorPitch:
-    "CommercialDisputeExpert.com connects counsel and law firms with qualified commercial dispute expert witnesses — forensic accounting, quantum analysis and court-ready expert reports for litigation and arbitration.",
+    "CommercialDisputeExpert.com connects counsel and law firms with qualified commercial dispute expert witnesses: forensic accounting, quantum analysis and court-ready expert reports for litigation and arbitration.",
   description:
-    "We connect counsel with independent commercial dispute expert witnesses and forensic accountants for litigation and arbitration. Not a law firm — we do not provide legal advice.",
+    "We connect counsel with independent commercial dispute expert witnesses and forensic accountants for litigation and arbitration. Not a law firm. We do not provide legal advice.",
 
   expert: {
     slug: "network",

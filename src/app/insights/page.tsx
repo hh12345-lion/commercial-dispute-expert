@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { BlogJsonLd } from "@/components/json-ld";
@@ -8,7 +9,7 @@ import { getAllInsights } from "@/lib/mdx";
 export const metadata = buildMetadata({
   title: "Insights - Commercial Dispute & Expert Witness",
   description:
-    "Articles for legal professionals on CPR Part 35, loss of profits quantum, expert witness appointments and commercial dispute forensic accounting.",
+    "Articles for legal professionals on expert determination, loss of profits quantum, expert witness appointments and commercial dispute forensic accounting.",
   path: "/insights",
 });
 
@@ -31,26 +32,42 @@ export default function InsightsIndexPage() {
       <ul className="mt-12 divide-y divide-border">
         {posts.map((post) => (
           <li key={post.slug} className="py-8">
-            <article>
-              <time dateTime={post.date} className="text-sm text-foreground/60">
-                {new Date(post.date).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </time>
-              <h2 className="mt-2 text-xl font-bold break-words text-charcoal sm:text-2xl">
-                <Link href={`/insights/${post.slug}`} className="hover:text-brand-green">
-                  {post.title}
+            <article className="flex flex-col gap-5 sm:flex-row sm:items-start">
+              {post.image ? (
+                <Link
+                  href={`/insights/${post.slug}`}
+                  className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden rounded-md bg-muted sm:aspect-[4/3] sm:w-56"
+                >
+                  <Image
+                    src={post.image}
+                    alt={post.imageAlt ?? post.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 224px"
+                  />
                 </Link>
-              </h2>
-              <p className="mt-3 max-w-2xl text-foreground">{post.description}</p>
-              <Link
-                href={`/insights/${post.slug}`}
-                className="mt-4 inline-block text-sm font-medium text-brand-green hover:underline"
-              >
-                Read article
-              </Link>
+              ) : null}
+              <div className="min-w-0 flex-1">
+                <time dateTime={post.date} className="text-sm text-foreground/60">
+                  {new Date(post.date).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </time>
+                <h2 className="mt-2 text-xl font-bold break-words text-charcoal sm:text-2xl">
+                  <Link href={`/insights/${post.slug}`} className="hover:text-brand-green">
+                    {post.title}
+                  </Link>
+                </h2>
+                <p className="mt-3 max-w-2xl text-foreground">{post.description}</p>
+                <Link
+                  href={`/insights/${post.slug}`}
+                  className="mt-4 inline-block text-sm font-medium text-brand-green hover:underline"
+                >
+                  Read article
+                </Link>
+              </div>
             </article>
           </li>
         ))}

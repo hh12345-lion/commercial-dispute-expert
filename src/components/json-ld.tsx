@@ -164,6 +164,7 @@ export function ArticleJsonLd({
   modified,
   slug,
   author,
+  image,
 }: {
   title: string;
   description: string;
@@ -171,12 +172,13 @@ export function ArticleJsonLd({
   modified?: string;
   slug: string;
   author: string;
+  image?: string;
 }) {
   const url = absoluteUrl(`/insights/${slug}`);
   const published = new Date(date).toISOString();
   const modifiedIso = new Date(modified ?? date).toISOString();
   const authorName = isPlaceholder(author) ? siteConfig.businessName : author;
-  const imageUrl = absoluteUrl(insightOgImagePath(slug));
+  const imageUrl = absoluteUrl(image ?? insightOgImagePath(slug));
 
   return (
     <JsonLdScript

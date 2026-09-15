@@ -13,6 +13,9 @@ export type InsightFrontmatter = {
   author: string;
   tags: string[];
   slug: string;
+  /** Optional featured image path under /public */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type InsightPost = InsightFrontmatter & {
@@ -42,6 +45,8 @@ export function getInsightBySlug(slug: string): InsightPost | null {
     modified: data.modified as string | undefined,
     author: data.author as string,
     tags: (data.tags as string[]) ?? [],
+    image: data.image as string | undefined,
+    imageAlt: data.imageAlt as string | undefined,
     content,
   };
 }

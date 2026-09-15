@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: Props) {
     description: post.description,
     path: `/insights/${slug}`,
     keywords: post.tags,
+    ogImagePath: post.image,
   });
 
   const modified = post.modified ?? post.date;
@@ -83,6 +85,7 @@ export default async function InsightArticlePage({ params }: Props) {
         modified={post.modified}
         slug={post.slug}
         author={post.author}
+        image={post.image}
       />
       <Breadcrumb
         currentPath={`/insights/${slug}`}
@@ -94,7 +97,7 @@ export default async function InsightArticlePage({ params }: Props) {
       />
       <header>
         <time dateTime={post.date} className="text-sm text-foreground/60">
-          {new Date(post.date).toLocaleDateString("en-GB", {
+          {new Date(post.date).toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
             year: "numeric",
@@ -105,6 +108,19 @@ export default async function InsightArticlePage({ params }: Props) {
           {post.description}
         </p>
       </header>
+
+      {post.image ? (
+        <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-lg bg-muted">
+          <Image
+            src={post.image}
+            alt={post.imageAlt ?? post.title}
+            fill
+            priority
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 960px"
+          />
+        </div>
+      ) : null}
 
       <div className="prose-cde mt-10">
         <MDXRemote source={post.content} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
