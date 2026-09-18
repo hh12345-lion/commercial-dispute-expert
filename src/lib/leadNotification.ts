@@ -16,9 +16,11 @@ export type LeadWebhookInput = {
   fullName: string;
   email: string;
   phone: string;
+  /** Free-text enquiry body — always sent to n8n as `message`. */
+  message?: string;
 };
 
-/** Outbound n8n / webhook body — exactly five keys, identical across all brand sites. */
+/** Outbound n8n / webhook body — shared keys across brand sites (+ message). */
 export function buildLeadWebhookBody(lead: LeadWebhookInput) {
   return {
     "Full Name": lead.fullName,
@@ -26,6 +28,7 @@ export function buildLeadWebhookBody(lead: LeadWebhookInput) {
     "Phone Number": lead.phone,
     "Brand name": BRAND_NAME,
     domain: getSiteDomain(),
+    message: lead.message ?? "",
   };
 }
 

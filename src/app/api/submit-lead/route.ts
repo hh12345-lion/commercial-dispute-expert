@@ -11,6 +11,14 @@ type LeadBody = {
   phone?: unknown;
   formType?: unknown;
   form_type?: unknown;
+  message?: unknown;
+  Message?: unknown;
+  description?: unknown;
+  enquiry?: unknown;
+  details?: unknown;
+  summary?: unknown;
+  notes?: unknown;
+  matter?: unknown;
 };
 
 function trimField(v: unknown, max = 320): string {
@@ -18,12 +26,32 @@ function trimField(v: unknown, max = 320): string {
   return s.length > max ? s.slice(0, max) : s;
 }
 
+function resolveLeadMessage(body: LeadBody): string {
+  const keys = [
+    "message",
+    "Message",
+    "description",
+    "enquiry",
+    "details",
+    "summary",
+    "notes",
+    "matter",
+  ] as const;
+  for (const key of keys) {
+    const v = body[key];
+    if (v != null && String(v).trim()) {
+      return trimField(v, 8000);
+    }
+  }
+  return "";
+}
+
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });
 }
 
 /**
- * POST /api/submit-lead — forwards lead to n8n webhook (five-key JSON including domain).
+ * POST /api/submit-lead — forwards lead to n8n webhook (shared keys including message).
  * On Netlify, netlify.toml redirects this path to netlify/functions/submit-lead.js.
  */
 export async function POST(request: Request) {
@@ -37,6 +65,7 @@ export async function POST(request: Request) {
   const fullName = trimField(body.fullName ?? body.full_name, 300);
   const email = trimField(body.email, 320);
   const phone = trimField(body.phone, 80);
+  const message = resolveLeadMessage(body);
 
   if (!fullName || !email) {
     return NextResponse.json(
@@ -55,7 +84,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await notifyLeadWebhook({ fullName, email, phone });
+  const result = await notifyLeadWebhook({ fullName, email, phone, message });
 
   if (!result.ok) {
     const status = result.error === "WEBHOOK_REJECTED" ? 502 : 502;

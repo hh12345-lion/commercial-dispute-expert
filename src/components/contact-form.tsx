@@ -55,6 +55,7 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
               email,
               phone: phone || "",
               formType: resolvedFormType,
+              message,
             }),
           });
 
