@@ -8,7 +8,7 @@ import {
 
 const siteUrl = siteConfig.domain.replace(/\/$/, "");
 
-/** Hostname for n8n webhook `domain` field — no protocol, no www. */
+/** Hostname for n8n webhook `domain` field: no protocol, no www. */
 export function getSiteDomain(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.domain;
   try {
@@ -19,7 +19,7 @@ export function getSiteDomain(): string {
   }
 }
 
-/** Canonical URL — homepage has no trailing slash (matches sitemap) */
+/** Canonical URL: homepage has no trailing slash (matches sitemap) */
 export function absoluteUrl(path: string): string {
   if (path === "/" || path === "") return siteUrl;
   const normalized = path.startsWith("/") ? path : `/${path}`;

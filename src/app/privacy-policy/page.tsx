@@ -1,9 +1,8 @@
-import { Breadcrumb } from "@/components/breadcrumb";
+import { PageHero } from "@/components/page-hero";
 import { PageContainer } from "@/components/page-container";
 import { buildMetadata } from "@/lib/seo";
 import { isPlaceholder } from "@/lib/seo/placeholders";
 import { siteConfig } from "@/config/site";
-import { PAGE_TITLE_CLASS } from "@/lib/ui-classes";
 
 export const metadata = buildMetadata({
   title: "Privacy Policy",
@@ -23,13 +22,14 @@ export default function PrivacyPolicyPage() {
   const registeredAddress = formatAddress();
 
   return (
-    <PageContainer>
-      <Breadcrumb
+    <>
+      <PageHero
+        title="Privacy policy"
+        intro="Last updated: May 2026"
+        crumbs={[{ label: "Home", href: "/" }, { label: "Privacy policy" }]}
         currentPath="/privacy-policy"
-        items={[{ label: "Home", href: "/" }, { label: "Privacy policy" }]}
       />
-      <h1 className={PAGE_TITLE_CLASS}>Privacy policy</h1>
-      <p className="mt-4 text-sm text-foreground/70">Last updated: May 2026</p>
+      <PageContainer>
 
       <div className="prose-cde mt-8">
         <p>
@@ -82,6 +82,7 @@ export default function PrivacyPolicyPage() {
           ) : null}
         </p>
       </div>
-    </PageContainer>
+      </PageContainer>
+    </>
   );
 }

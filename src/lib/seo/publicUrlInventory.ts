@@ -20,6 +20,7 @@ export const APP_STATIC_PATHS = [
   "/privacy-policy",
   "/terms",
   "/cookie-policy",
+  "/image-credits",
 ] as const;
 
 /** Paths that exist in the app but must not appear in the XML sitemap. */

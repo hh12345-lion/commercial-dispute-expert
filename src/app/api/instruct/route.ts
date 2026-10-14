@@ -26,7 +26,7 @@ export async function OPTIONS() {
 }
 
 /**
- * POST /api/instruct — Google Sheets row (one shared tab + Form Type).
+ * POST /api/instruct: Google Sheets row (one shared tab + Form Type).
  * Prefer server action write; this route remains for direct/testing use.
  */
 export async function POST(request: Request) {
@@ -76,6 +76,6 @@ export async function POST(request: Request) {
   return NextResponse.json({
     ok: true,
     writtenToSheet,
-    ...(writtenToSheet ? {} : { warning: "Sheet write failed — see server logs" }),
+    ...(writtenToSheet ? {} : { warning: "Sheet write failed: see server logs" }),
   });
 }

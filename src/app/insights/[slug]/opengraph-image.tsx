@@ -1,16 +1,12 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/config/site";
-import { getInsightBySlug, getInsightSlugs } from "@/lib/mdx";
+import { getInsightBySlug } from "@/lib/mdx";
 
 export const alt = "Commercial Dispute Expert Insight";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 type Props = { params: Promise<{ slug: string }> };
-
-export async function generateStaticParams() {
-  return getInsightSlugs().map((slug) => ({ slug }));
-}
 
 export default async function InsightOgImage({ params }: Props) {
   const { slug } = await params;
@@ -27,16 +23,17 @@ export default async function InsightOgImage({ params }: Props) {
           flexDirection: "column",
           justifyContent: "center",
           padding: 80,
-          background: "linear-gradient(135deg, #1c2b3a 0%, #1e293b 50%, #1b5e20 100%)",
-          color: "white",
+          background: "#03263B",
+          borderRight: "36px solid #852C3C",
+          color: "#F4EFE8",
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        <div style={{ fontSize: 28, color: "#86efac", marginBottom: 16 }}>Insight</div>
+        <div style={{ fontSize: 28, color: "#A89D94", marginBottom: 16 }}>Insight</div>
         <div style={{ fontSize: 48, fontWeight: 700, lineHeight: 1.15, maxWidth: 980 }}>
           {title}
         </div>
-        <div style={{ fontSize: 24, marginTop: 32, color: "#cbd5e1" }}>{siteConfig.brandShort}</div>
+        <div style={{ fontSize: 24, marginTop: 32, color: "#A89D94" }}>{siteConfig.businessName}</div>
       </div>
     ),
     { ...size },

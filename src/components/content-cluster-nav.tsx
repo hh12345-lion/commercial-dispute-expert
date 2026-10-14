@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Chevron } from "@/components/brand";
 
 const clusters = [
   { href: "/services", label: "Expert witness services" },
@@ -10,12 +11,16 @@ const clusters = [
 
 export function ContentClusterNav() {
   return (
-    <nav aria-label="Explore our expert witness resources" className="rounded-lg border border-border bg-white p-6">
-      <h2 className="text-xl font-bold text-charcoal">Explore our expert witness resources</h2>
-      <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+    <nav
+      aria-label="Explore our expert witness resources"
+      className="border-l-4 border-navy bg-cream p-6 sm:p-8"
+    >
+      <h2 className="text-xl font-extrabold text-navy">Explore our expert witness resources</h2>
+      <ul className="mt-5 space-y-3">
         {clusters.map((c) => (
           <li key={c.href}>
-            <Link href={c.href} className="text-sm font-medium text-brand-green hover:underline">
+            <Link href={c.href} className="group inline-flex items-center gap-3 font-semibold text-navy hover:text-burgundy">
+              <Chevron className="h-2.5 w-auto text-burgundy transition group-hover:translate-x-1" />
               {c.label}
             </Link>
           </li>

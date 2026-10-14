@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Breadcrumb } from "@/components/breadcrumb";
+import { PageHero } from "@/components/page-hero";
+import { Chevron } from "@/components/brand";
+import { servicePhoto } from "@/lib/page-photos";
 import { FAQAccordion } from "@/components/faq-accordion";
 import { CTABanner } from "@/components/cta-banner";
 import { FAQPageJsonLd, ServiceJsonLd } from "@/components/json-ld";
 import { servicesContent, type ServiceContent } from "@/lib/services-content";
-import { CheckCircle2 } from "lucide-react";
 
 export function ServicePageTemplate({ service }: { service: ServiceContent }) {
   const related = service.relatedSlugs
@@ -15,30 +16,26 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
     <>
       <FAQPageJsonLd faqs={service.faqs} />
       <ServiceJsonLd service={service} />
-      <Breadcrumb
-        currentPath={service.path}
-        items={[
+      <PageHero
+        title={service.title}
+        intro={service.intro}
+        crumbs={[
           { label: "Home", href: "/" },
           { label: "Services", href: "/services" },
           { label: service.title },
         ]}
+        currentPath={service.path}
+        photo={servicePhoto(service.slug)}
       />
-      <article>
-      <h1 className="text-2xl font-bold tracking-tight text-balance break-words text-charcoal sm:text-3xl md:text-4xl">
-        {service.title}
-      </h1>
-      <p className="mt-4 text-base leading-relaxed text-foreground sm:mt-6 sm:text-lg">
-        {service.intro}
-      </p>
-
+      <article className="mx-auto w-full min-w-0 max-w-5xl px-4 pb-16 pt-4 sm:px-6 lg:px-8">
         <section className="mt-12">
-          <h2 className="text-xl font-bold break-words text-charcoal sm:text-2xl">
+          <h2 className="text-2xl font-extrabold break-words text-navy sm:text-3xl">
             When legal teams instruct us
           </h2>
           <ul className="mt-6 space-y-3">
             {service.whenToInstruct.map((item) => (
               <li key={item} className="flex gap-3 text-foreground">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-green" aria-hidden />
+                <Chevron className="mt-1.5 h-3 w-auto shrink-0 text-burgundy" />
                 {item}
               </li>
             ))}
@@ -46,8 +43,8 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
         </section>
 
         <section className="mt-12">
-          <h2 className="text-xl font-bold break-words text-charcoal sm:text-2xl">Deliverables</h2>
-          <ul className="mt-6 list-disc space-y-2 pl-6 text-foreground">
+          <h2 className="text-2xl font-extrabold break-words text-navy sm:text-3xl">Deliverables</h2>
+          <ul className="mt-6 list-disc space-y-2 pl-6 text-foreground marker:text-burgundy">
             {service.deliverables.map((d) => (
               <li key={d}>{d}</li>
             ))}
@@ -55,14 +52,14 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
         </section>
 
         <section className="mt-12">
-          <h2 className="text-xl font-bold break-words text-charcoal sm:text-2xl">Our process</h2>
+          <h2 className="text-2xl font-extrabold break-words text-navy sm:text-3xl">Our process</h2>
           <ol className="mt-8 grid gap-6 sm:grid-cols-2">
             {service.processSteps.map((step, i) => (
               <li
                 key={step.title}
-                className="rounded-lg border border-border bg-muted p-6"
+                className="border-l-4 border-navy bg-cream p-6"
               >
-                <span className="text-sm font-bold text-brand-green">Step {i + 1}</span>
+                <span className="font-heading text-2xl font-extrabold text-burgundy">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="mt-2 font-semibold text-charcoal">{step.title}</h3>
                 <p className="mt-2 text-sm text-foreground">{step.description}</p>
               </li>
@@ -71,7 +68,7 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
         </section>
 
         <section className="mt-16">
-          <h2 className="text-xl font-bold break-words text-charcoal sm:text-2xl">
+          <h2 className="text-2xl font-extrabold break-words text-navy sm:text-3xl">
             Frequently asked questions
           </h2>
           <div className="mt-8">
@@ -81,7 +78,7 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
 
         {related.length > 0 && (
           <section className="mt-16">
-            <h2 className="text-xl font-bold break-words text-charcoal sm:text-2xl">
+            <h2 className="text-2xl font-extrabold break-words text-navy sm:text-3xl">
               Related services
             </h2>
             <ul className="mt-6 flex flex-wrap gap-4">
@@ -89,7 +86,7 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
                 <li key={r.slug}>
                   <Link
                     href={r.path}
-                    className="rounded-full border border-border px-4 py-2 text-sm font-medium text-charcoal hover:border-brand-green/40"
+                    className="inline-flex items-center gap-2 border-2 border-navy px-4 py-2 text-sm font-semibold text-navy hover:bg-navy hover:text-white"
                   >
                     {r.title}
                   </Link>
@@ -99,9 +96,7 @@ export function ServicePageTemplate({ service }: { service: ServiceContent }) {
           </section>
         )}
       </article>
-      <div className="mt-16">
-        <CTABanner />
-      </div>
+      <CTABanner />
     </>
   );
 }

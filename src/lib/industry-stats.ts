@@ -1,4 +1,4 @@
-/** Trust and process content — no pricing or fee benchmarks. */
+/** Trust and process content: no pricing or fee benchmarks. */
 
 export const TRUST_POINTS = [
   "Credentialed experts: CPA, CFF, ASA, CFA and forensic accounting specialists",

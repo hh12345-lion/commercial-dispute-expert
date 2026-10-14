@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { BreadcrumbListJsonLd } from "@/components/json-ld";
+import { Chevron } from "@/components/brand";
 
 export type BreadcrumbItem = { label: string; href?: string };
 
@@ -15,18 +15,18 @@ export function Breadcrumb({
   return (
     <>
       <BreadcrumbListJsonLd items={items} currentPath={currentPath} />
-      <nav aria-label="Breadcrumb" className="mb-8">
-        <ol className="flex flex-wrap items-center gap-1 text-sm text-foreground/70">
+      <nav aria-label="Breadcrumb">
+        <ol className="flex flex-wrap items-center gap-2 text-sm text-ink/70">
           {items.map((item, i) => (
-            <li key={i} className="flex items-center gap-1">
-              {i > 0 && <ChevronRight className="h-4 w-4 shrink-0 opacity-50" aria-hidden />}
+            <li key={i} className="flex items-center gap-2">
+              {i > 0 && <Chevron className="h-2 w-auto shrink-0 text-burgundy" />}
               {item.href ? (
-                <Link href={item.href} className="hover:text-brand-green hover:underline">
+                <Link href={item.href} className="hover:text-navy hover:underline">
                   {item.label}
                 </Link>
               ) : (
                 <span
-                  className="max-w-[min(100%,14rem)] truncate font-medium text-charcoal sm:max-w-xs md:max-w-md"
+                  className="max-w-[min(100%,16rem)] truncate font-semibold text-navy sm:max-w-sm md:max-w-md"
                   aria-current="page"
                   title={item.label}
                 >

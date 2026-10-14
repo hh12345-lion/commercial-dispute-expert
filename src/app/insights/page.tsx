@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Breadcrumb } from "@/components/breadcrumb";
+import { PageHero } from "@/components/page-hero";
+import { photos } from "@/lib/images";
 import { BlogJsonLd } from "@/components/json-ld";
 import { ContentSection } from "@/components/content-section";
 import { buildMetadata } from "@/lib/seo";
 import { getAllInsights } from "@/lib/mdx";
+import { fallbackPhoto } from "@/lib/page-photos";
 
 export const metadata = buildMetadata({
   title: "Insights - Commercial Dispute & Expert Witness",
@@ -17,36 +19,32 @@ export default function InsightsIndexPage() {
   const posts = getAllInsights();
 
   return (
-    <ContentSection className="!py-10">
+    <>
       <BlogJsonLd />
-      <Breadcrumb
+      <PageHero
+        title="Insights"
+        intro="Practical guidance for legal professionals on forensic accounting, quantum and expert witness procedure in commercial disputes."
+        crumbs={[{ label: "Home", href: "/" }, { label: "Insights" }]}
         currentPath="/insights"
-        items={[{ label: "Home", href: "/" }, { label: "Insights" }]}
+        photo={photos.stockExchange}
       />
-      <h1 className="text-3xl font-bold text-charcoal md:text-4xl">Insights</h1>
-      <p className="mt-6 max-w-3xl text-lg text-foreground">
-        Practical guidance for legal professionals on forensic accounting, quantum and expert witness
-        procedure in commercial disputes.
-      </p>
-
-      <ul className="mt-12 divide-y divide-border">
+      <ContentSection>
+      <ul className="grid gap-10 md:grid-cols-2">
         {posts.map((post) => (
-          <li key={post.slug} className="py-8">
-            <article className="flex flex-col gap-5 sm:flex-row sm:items-start">
-              {post.image ? (
+          <li key={post.slug}>
+            <article className="flex flex-col gap-5">
                 <Link
                   href={`/insights/${post.slug}`}
-                  className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden rounded-md bg-muted sm:aspect-[4/3] sm:w-56"
+                  className="chevron-r relative block aspect-[16/9] w-full shrink-0 overflow-hidden bg-cream"
                 >
                   <Image
-                    src={post.image}
-                    alt={post.imageAlt ?? post.title}
+                    src={post.image ?? fallbackPhoto(post.slug).src}
+                    alt={post.image ? (post.imageAlt ?? post.title) : fallbackPhoto(post.slug).alt}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 640px) 100vw, 224px"
+                    sizes="(max-width: 768px) 90vw, 540px"
                   />
                 </Link>
-              ) : null}
               <div className="min-w-0 flex-1">
                 <time dateTime={post.date} className="text-sm text-foreground/60">
                   {new Date(post.date).toLocaleDateString("en-US", {
@@ -55,8 +53,8 @@ export default function InsightsIndexPage() {
                     year: "numeric",
                   })}
                 </time>
-                <h2 className="mt-2 text-xl font-bold break-words text-charcoal sm:text-2xl">
-                  <Link href={`/insights/${post.slug}`} className="hover:text-brand-green">
+                <h2 className="mt-2 text-xl font-extrabold break-words text-navy sm:text-2xl">
+                  <Link href={`/insights/${post.slug}`} className="hover:text-burgundy">
                     {post.title}
                   </Link>
                 </h2>
@@ -72,6 +70,7 @@ export default function InsightsIndexPage() {
           </li>
         ))}
       </ul>
-    </ContentSection>
+      </ContentSection>
+    </>
   );
 }

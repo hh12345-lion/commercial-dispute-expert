@@ -6,14 +6,14 @@ export function RelatedInsights({ slug }: { slug: string }) {
   if (related.length === 0) return null;
 
   return (
-    <aside className="mt-12 rounded-lg border border-border bg-white p-6">
-      <h2 className="text-lg font-bold text-charcoal">Related insights</h2>
+    <aside className="mt-12 border-t-2 border-navy pt-8">
+      <h2 className="text-lg font-bold text-navy">Related insights</h2>
       <ul className="mt-4 space-y-3">
         {related.map((post) => (
           <li key={post.slug}>
             <Link
               href={`/insights/${post.slug}`}
-              className="font-medium text-brand-green hover:underline"
+              className="font-medium text-navy hover:underline"
             >
               {post.title}
             </Link>

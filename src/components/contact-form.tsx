@@ -46,7 +46,7 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
         }
 
         try {
-          // Webhook primary — hard-fail only if notification endpoint rejects.
+          // Webhook primary: hard-fail only if notification endpoint rejects.
           const webhookRes = await fetch("/api/submit-lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ export function ContactForm({ formType = "contact", title }: ContactFormProps) {
 
           if (emailResult.sheetWritten === false && process.env.NODE_ENV === "development") {
             console.warn(
-              "[ContactForm] Google Sheets row was not written — check Netlify function logs for [Google Sheets] messages.",
+              "[ContactForm] Google Sheets row was not written: check Netlify function logs for [Google Sheets] messages.",
             );
           }
 

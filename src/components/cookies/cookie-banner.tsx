@@ -31,7 +31,7 @@ export function CookieBanner({
             Your privacy matters
           </h2>
           <p id="cde-cookie-banner-desc" className="mt-2 text-sm leading-relaxed text-white/85">
-            We use cookies to keep this site secure and working, and - only with your permission -
+            We use cookies to keep this site secure and working, and, only with your permission,
             to understand how the site is used and to support relevant marketing. You can accept all,
             reject non-essential cookies, or customise your choices. See our{" "}
             <Link

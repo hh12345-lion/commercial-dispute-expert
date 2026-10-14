@@ -37,7 +37,7 @@ export function preferencesToConsentMode(prefs: CookiePreferences) {
   };
 }
 
-/** Inline script body for beforeInteractive — must run before any Google tag */
+/** Inline script body for beforeInteractive: must run before any Google tag */
 export const CONSENT_DEFAULTS_INLINE_SCRIPT = `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}

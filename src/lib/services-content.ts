@@ -81,7 +81,7 @@ export const servicesContent: Record<string, ServiceContent> = {
     path: "/services/litigation-support",
     keywords: ["litigation support forensic accountant", "forensic accounting litigation support"],
     intro:
-      "Not every financial engagement requires a disclosed expert. Litigation support allows your legal team to understand the numbers, test the opposing case and prepare strategy behind the scenes - work that remains privileged when properly structured.",
+      "Not every financial engagement requires a disclosed expert. Litigation support allows your legal team to understand the numbers, test the opposing case and prepare strategy behind the scenes, work that remains privileged when properly structured.",
     whenToInstruct: [
       "Early case assessment before deciding whether to appoint an expert",
       "Preparation of cross-examination questions for the opposing financial witness",
@@ -115,7 +115,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "Who can instruct litigation support?",
         answer:
-          "Solicitors, barristers and in-house counsel routinely instruct us. We do not provide legal advice - we provide financial analysis for your legal strategy.",
+          "Solicitors, barristers and in-house counsel routinely instruct us. We do not provide legal advice; we provide financial analysis for your legal strategy.",
       },
       {
         question: "Is work product confidential?",
@@ -134,7 +134,7 @@ export const servicesContent: Record<string, ServiceContent> = {
     path: "/services/loss-of-profits-quantum",
     keywords: ["loss of profits expert witness", "quantum expert witness commercial dispute"],
     intro:
-      "Loss of profits and broader quantum issues often decide the value of commercial claims. We build transparent damages models that withstand scrutiny from opponents, tribunals and courts - explaining not only the headline figure but the assumptions behind it.",
+      "Loss of profits and broader quantum issues often decide the value of commercial claims. We build transparent damages models that withstand scrutiny from opponents, tribunals and courts, explaining not only the headline figure but the assumptions behind it.",
     whenToInstruct: [
       "Breach of contract claims alleging lost revenue or margin",
       "Tortious interference or unlawful competition affecting trading results",
@@ -167,7 +167,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "Can you review the opposing expert's quantum?",
         answer:
-          "Yes - critique and rebuttal of opposing schedules is a core part of many instructions.",
+          "Yes, critique and rebuttal of opposing schedules is a core part of many instructions.",
       },
       {
         question: "How do you handle uncertain future losses?",
@@ -186,7 +186,7 @@ export const servicesContent: Record<string, ServiceContent> = {
     path: "/services/breach-of-contract-damages",
     keywords: ["breach of contract expert witness damages", "contract dispute forensic accountant"],
     intro:
-      "Contract disputes frequently hinge on what the breach cost in financial terms - and whether claimed losses are recoverable, mitigated and properly evidenced. We help legal teams establish or challenge damages with methodical forensic analysis.",
+      "Contract disputes frequently hinge on what the breach cost in financial terms, and whether claimed losses are recoverable, mitigated and properly evidenced. We help legal teams establish or challenge damages with methodical forensic analysis.",
     whenToInstruct: [
       "Supplier or customer contract breaches affecting performance or margin",
       "Service agreement failures with financial consequences",
@@ -214,7 +214,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "Can you assist before proceedings are issued?",
         answer:
-          "Yes - early quantum advice often informs without-prejudice negotiation and strategy.",
+          "Yes, early quantum advice often informs without-prejudice negotiation and strategy.",
       },
       {
         question: "What about international contracts?",
@@ -261,7 +261,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "What valuation approaches do you use?",
         answer:
-          "Approach depends on company characteristics, market evidence and instruction - DCF, earnings multiples, net assets or hybrid methods as appropriate.",
+          "Approach depends on company characteristics, market evidence and instruction: DCF, earnings multiples, net assets or hybrid methods as appropriate.",
       },
       {
         question: "Minority discount issues?",
@@ -290,7 +290,7 @@ export const servicesContent: Record<string, ServiceContent> = {
     path: "/services/business-valuation",
     keywords: ["business valuation expert witness litigation", "company valuation dispute expert"],
     intro:
-      "Valuation disputes demand defensible assumptions, market awareness and clear communication. We provide litigation-focused business and share valuations that tribunals and judges can follow - not opaque models.",
+      "Valuation disputes demand defensible assumptions, market awareness and clear communication. We provide litigation-focused business and share valuations that tribunals and judges can follow, not opaque models.",
     whenToInstruct: [
       "Purchase price adjustment and earn-out disputes",
       "Shareholder buy-out and partnership exit valuations",
@@ -365,7 +365,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "Are you loss adjusters?",
         answer:
-          "No - we provide independent expert and forensic accounting opinions for legal proceedings, not insurer adjustment.",
+          "No, we provide independent expert and forensic accounting opinions for legal proceedings, not insurer adjustment.",
       },
       {
         question: "COVID-related BI?",
@@ -446,7 +446,7 @@ export const servicesContent: Record<string, ServiceContent> = {
     path: "/services/expert-reports-testimony",
     keywords: ["CPR Part 35 expert report forensic accountant", "expert witness report commercial"],
     intro:
-      "The expert report is the foundation of financial expert evidence. We prepare structured, readable reports that comply with CPR Part 35 and Practice Direction 35 - and we attend court, arbitration and expert meetings when testimony is required.",
+      "The expert report is the foundation of financial expert evidence. We prepare structured, readable reports that comply with CPR Part 35 and Practice Direction 35, and we attend court, arbitration and expert meetings when testimony is required.",
     whenToInstruct: [
       "Need for first expert report on quantum or forensic accounting issues",
       "Reply or rebuttal to opponent expert",
@@ -474,7 +474,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "Can you attend expert meetings?",
         answer:
-          "Yes - we regularly participate in experts' meetings and prepare joint statements.",
+          "Yes, we regularly participate in experts' meetings and prepare joint statements.",
       },
       {
         question: "Arbitration reports differ?",
@@ -484,7 +484,7 @@ export const servicesContent: Record<string, ServiceContent> = {
       {
         question: "Expedited reports?",
         answer:
-          "Urgent timetables can be accommodated subject to resource availability - discuss at instruction.",
+          "Urgent timetables can be accommodated subject to resource availability, discuss at instruction.",
       },
     ],
     relatedSlugs: ["commercial-dispute-expert-witness", "arbitration-mediation"],
@@ -494,11 +494,11 @@ export const servicesContent: Record<string, ServiceContent> = {
     title: "Arbitration & Mediation",
     metaTitle: "Arbitration Expert Witness Forensic Accounting",
     metaDescription:
-      "Expert witness and quantum support for commercial arbitration and mediation. LCIA, ICC and ad hoc proceedings - forensic accounting for legal teams.",
+      "Expert witness and quantum support for commercial arbitration and mediation. LCIA, ICC and ad hoc proceedings, forensic accounting for legal teams.",
     path: "/services/arbitration-mediation",
     keywords: ["arbitration expert witness forensic accounting", "mediation quantum expert"],
     intro:
-      "International and domestic arbitration, together with commercial mediation, often turn on the same financial questions as court litigation - with different procedural rules and timetables. We adapt expert evidence to arbitral institutions and mediation settings while maintaining independence.",
+      "International and domestic arbitration, together with commercial mediation, often turn on the same financial questions as court litigation, with different procedural rules and timetables. We adapt expert evidence to arbitral institutions and mediation settings while maintaining independence.",
     whenToInstruct: [
       "LCIA, ICC, SIAC or ad hoc arbitration with financial quantum issues",
       "Mediation requiring independent quantum opinion or sensitivity analysis",

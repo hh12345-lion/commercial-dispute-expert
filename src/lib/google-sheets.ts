@@ -30,7 +30,7 @@ function normalizePrivateKey(raw: string | undefined): string | undefined {
   return key;
 }
 
-/** Which env vars are missing — safe to log (names only). */
+/** Which env vars are missing: safe to log (names only). */
 export function getGoogleSheetsConfigStatus(): {
   configured: boolean;
   missing: string[];

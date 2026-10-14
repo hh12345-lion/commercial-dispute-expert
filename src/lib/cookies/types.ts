@@ -12,7 +12,7 @@ export type StoredConsent = {
 
 export const CONSENT_STORAGE_KEY = "cde-cookie-consent-v1";
 export const CONSENT_VERSION = 1;
-/** Consent record validity — 12 months (GDPR common practice) */
+/** Consent record validity: 12 months (GDPR common practice) */
 export const CONSENT_MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000;
 
 export const DEFAULT_DENIED_PREFERENCES: CookiePreferences = {

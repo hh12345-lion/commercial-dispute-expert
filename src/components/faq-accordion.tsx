@@ -1,46 +1,21 @@
-"use client";
-
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Chevron } from "@/components/brand";
 import type { ServiceFaq } from "@/lib/services-content";
 
+/** Native disclosures: every answer is in the server-rendered HTML. */
 export function FAQAccordion({ faqs }: { faqs: ServiceFaq[] }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   return (
-    <div className="divide-y divide-border rounded-lg border border-border">
-      {faqs.map((faq, index) => {
-        const isOpen = openIndex === index;
-        return (
-          <div key={faq.question}>
-            <button
-              type="button"
-              className="flex w-full min-h-[44px] items-center justify-between gap-3 px-4 py-4 text-left text-sm font-medium text-charcoal hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-green sm:gap-4 sm:px-6 sm:py-5 sm:text-base"
-              aria-expanded={isOpen}
-              onClick={() => setOpenIndex(isOpen ? null : index)}
-            >
-              <span className="min-w-0 flex-1 break-words">{faq.question}</span>
-              <ChevronDown
-                className={cn(
-                  "h-5 w-5 shrink-0 text-foreground/50 transition-transform",
-                  isOpen && "rotate-180",
-                )}
-                aria-hidden
-              />
-            </button>
-            <div
-              className={cn(
-                "overflow-hidden px-4 transition-all sm:px-6",
-                isOpen ? "max-h-[min(120rem,80dvh)] pb-5" : "max-h-0",
-              )}
-              hidden={!isOpen}
-            >
-              <p className="leading-relaxed text-foreground">{faq.answer}</p>
-            </div>
-          </div>
-        );
-      })}
+    <div className="divide-y divide-border border-y border-border">
+      {faqs.map((faq, index) => (
+        <details key={faq.question} open={index === 0} className="group">
+          <summary className="flex min-h-[44px] cursor-pointer list-none items-start gap-4 py-5 text-left [&::-webkit-details-marker]:hidden">
+            <Chevron className="mt-1.5 h-3 w-auto shrink-0 text-burgundy transition-transform group-open:rotate-90" />
+            <span className="min-w-0 flex-1 break-words font-heading text-base font-bold text-navy sm:text-lg">
+              {faq.question}
+            </span>
+          </summary>
+          <p className="pb-6 pl-7 leading-relaxed text-ink/85">{faq.answer}</p>
+        </details>
+      ))}
     </div>
   );
 }

@@ -32,7 +32,7 @@ function subscribe(onStoreChange: () => void) {
   };
 }
 
-/** Serializable snapshot for useSyncExternalStore — avoids hydration mismatch */
+/** Serializable snapshot for useSyncExternalStore: avoids hydration mismatch */
 function getConsentSnapshot(): string {
   const stored = readStoredConsent();
   return stored ? JSON.stringify(stored) : "";
@@ -184,12 +184,12 @@ export function useCookieConsent(): CookieConsentContextValue {
   return ctx;
 }
 
-/** Optional hook for footer — no throw if provider missing */
+/** Optional hook for footer: no throw if provider missing */
 export function useCookieConsentOptional(): CookieConsentContextValue | null {
   return useContext(CookieConsentContext);
 }
 
-// UI split to keep provider file manageable — imported below
+// UI split to keep provider file manageable: imported below
 import { CookieBanner } from "@/components/cookies/cookie-banner";
 import { CookiePreferencesModal } from "@/components/cookies/cookie-preferences-modal";
 

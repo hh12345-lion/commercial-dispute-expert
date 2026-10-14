@@ -1,5 +1,7 @@
-import Link from "next/link";
-import { Breadcrumb } from "@/components/breadcrumb";
+import { PageHero } from "@/components/page-hero";
+import { photos } from "@/lib/images";
+import { ServiceCard } from "@/components/service-card";
+import { caseTypePhoto } from "@/lib/page-photos";
 import { CTABanner } from "@/components/cta-banner";
 import { ContentSection } from "@/components/content-section";
 import { buildMetadata } from "@/lib/seo";
@@ -15,26 +17,23 @@ export const metadata = buildMetadata({
 export default function CaseTypesHubPage() {
   return (
     <>
-      <ContentSection className="!py-10">
-        <Breadcrumb
-          currentPath="/case-types"
-          items={[{ label: "Home", href: "/" }, { label: "Case types" }]}
-        />
-        <h1 className="text-3xl font-bold text-charcoal md:text-4xl">Case types</h1>
-        <p className="mt-4 max-w-3xl text-lg text-foreground">
-          Browse common commercial dispute scenarios where legal teams instruct forensic accountants
-          and commercial dispute expert witnesses.
-        </p>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+      <PageHero
+        title="Case types"
+        intro="Browse common commercial dispute scenarios where legal teams instruct forensic accountants and commercial dispute expert witnesses."
+        crumbs={[{ label: "Home", href: "/" }, { label: "Case types" }]}
+        currentPath="/case-types"
+        photo={photos.containerPort}
+      />
+      <ContentSection>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {CASE_TYPES.map((c) => (
-            <Link
+            <ServiceCard
               key={c.slug}
+              title={c.hubLabel}
+              description={c.summary}
               href={`/case-types/${c.slug}`}
-              className="rounded-lg border border-border bg-white p-6 shadow-sm transition hover:border-brand-green/30"
-            >
-              <h2 className="font-semibold text-charcoal">{c.hubLabel}</h2>
-              <p className="mt-2 text-sm text-foreground">{c.summary}</p>
-            </Link>
+              photo={caseTypePhoto(c.slug)}
+            />
           ))}
         </div>
       </ContentSection>

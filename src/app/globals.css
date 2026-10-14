@@ -1,15 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #475569;
-  --charcoal: #0f172a;
-  --brand-accent: #0d9488;
+  /* Brand palette: navy 03263B, burgundy 852C3C, cream F4EFE8, charcoal 2C2D2C, stone A89D94 */
+  --background: #ffffff;
+  --foreground: #2c2d2c;
+  --charcoal: #03263b;
+  --brand-accent: #852c3c;
   --brand-green: var(--brand-accent);
-  --muted: #f1f5f9;
-  --border: #e2e8f0;
+  --muted: #f4efe8;
+  --border: color-mix(in srgb, #a89d94 45%, white);
   --surface: #ffffff;
-  --accent-line: #14b8a6;
+  --accent-line: #852c3c;
+  --navy: #03263b;
+  --burgundy: #852c3c;
+  --cream: #f4efe8;
+  --stone: #a89d94;
+  --ink: #2c2d2c;
 }
 
 @theme inline {
@@ -21,7 +27,13 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-surface: var(--surface);
-  --font-sans: var(--font-dm-sans);
+  --color-navy: var(--navy);
+  --color-burgundy: var(--burgundy);
+  --color-cream: var(--cream);
+  --color-stone: var(--stone);
+  --color-ink: var(--ink);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-manrope);
 }
 
 html {
@@ -32,10 +44,47 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
   min-width: 0;
   overflow-x: clip;
 }
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* The mark's chevron: photographs and buttons end in a forward point. */
+.chevron-r {
+  clip-path: polygon(0 0, calc(100% - var(--tip, 12%)) 0, 100% 50%, calc(100% - var(--tip, 12%)) 100%, 0 100%);
+}
+
+.btn-burgundy,
+.btn-navy,
+.btn-line,
+.btn-cream {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-burgundy { background: #852c3c; color: #fff; }
+.btn-burgundy:hover { background: #03263b; }
+.btn-navy { background: #03263b; color: #fff; }
+.btn-navy:hover { background: #852c3c; }
+.btn-line { border: 2px solid #03263b; color: #03263b; }
+.btn-line:hover { background: #03263b; color: #fff; }
+.btn-cream { border: 2px solid #f4efe8; color: #f4efe8; }
+.btn-cream:hover { background: #f4efe8; color: #03263b; }
 
 #main-content {
   min-width: 0;
@@ -106,6 +155,17 @@ body {
 .prose-cde a {
   color: var(--brand-accent);
   text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-cde ol {
+  margin-bottom: 1rem;
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+
+.prose-cde li::marker {
+  color: var(--burgundy);
 }
 
 @keyframes cde-cookie-slide-up {

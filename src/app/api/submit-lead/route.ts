@@ -51,7 +51,7 @@ export async function OPTIONS() {
 }
 
 /**
- * POST /api/submit-lead — forwards lead to n8n webhook (shared keys including message).
+ * POST /api/submit-lead: forwards lead to n8n webhook (shared keys including message).
  * On Netlify, netlify.toml redirects this path to netlify/functions/submit-lead.js.
  */
 export async function POST(request: Request) {

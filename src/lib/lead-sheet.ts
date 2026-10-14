@@ -12,7 +12,7 @@ export type LeadFields = {
   message: string;
 };
 
-/** Row 1 on GOOGLE_SHEET_TAB_NAME — one shared tab; Form Type distinguishes rows. */
+/** Row 1 on GOOGLE_SHEET_TAB_NAME: one shared tab; Form Type distinguishes rows. */
 export const LEAD_SHEET_HEADERS = [
   "Timestamp",
   "Brand",
@@ -45,7 +45,7 @@ export function resolveFormTypeLabel(formType?: string): "Contact" | "Instruct" 
 }
 
 /**
- * Row values in column order — must match row 1 in the spreadsheet tab.
+ * Row values in column order: must match row 1 in the spreadsheet tab.
  * See docs/google-sheets.md for header names.
  */
 export function buildLeadSheetRow(lead: LeadFields): (string | null)[] {
@@ -64,7 +64,7 @@ export function buildLeadSheetRow(lead: LeadFields): (string | null)[] {
 
 /**
  * Appends a lead row when Google Sheets env vars are set.
- * Throws on API errors — callers should catch so webhook success is not blocked.
+ * Throws on API errors: callers should catch so webhook success is not blocked.
  */
 export async function appendLeadToGoogleSheet(
   lead: LeadFields,
@@ -91,7 +91,7 @@ function formatSheetsError(error: unknown): string {
   return apiMessage;
 }
 
-/** Soft-fail wrapper — logs and never throws. Returns whether a row was written. */
+/** Soft-fail wrapper: logs and never throws. Returns whether a row was written. */
 export async function writeLeadToSheetSafely(
   lead: LeadFields,
   context: string,
@@ -99,7 +99,7 @@ export async function writeLeadToSheetSafely(
   const { configured, missing } = getGoogleSheetsConfigStatus();
 
   if (!configured) {
-    console.warn("[Google Sheets] Skipped — missing env vars:", missing.join(", "), {
+    console.warn("[Google Sheets] Skipped: missing env vars:", missing.join(", "), {
       context,
     });
     return false;

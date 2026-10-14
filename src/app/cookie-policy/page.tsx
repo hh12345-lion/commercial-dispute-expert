@@ -1,8 +1,7 @@
-import { Breadcrumb } from "@/components/breadcrumb";
+import { PageHero } from "@/components/page-hero";
 import { PageContainer } from "@/components/page-container";
 import { buildMetadata } from "@/lib/seo";
 import { COOKIE_CATEGORIES } from "@/lib/cookies/types";
-import { PAGE_TITLE_CLASS } from "@/lib/ui-classes";
 
 export const metadata = buildMetadata({
   title: "Cookie Policy",
@@ -13,13 +12,14 @@ export const metadata = buildMetadata({
 
 export default function CookiePolicyPage() {
   return (
-    <PageContainer>
-      <Breadcrumb
+    <>
+      <PageHero
+        title="Cookie policy"
+        intro="Last updated: May 2026"
+        crumbs={[{ label: "Home", href: "/" }, { label: "Cookie policy" }]}
         currentPath="/cookie-policy"
-        items={[{ label: "Home", href: "/" }, { label: "Cookie policy" }]}
       />
-      <h1 className={PAGE_TITLE_CLASS}>Cookie policy</h1>
-      <p className="mt-4 text-sm text-foreground/70">Last updated: May 2026</p>
+      <PageContainer>
 
       <div className="prose-cde mt-8">
         <p>
@@ -120,6 +120,7 @@ export default function CookiePolicyPage() {
           <a href="/contact">contact page</a> or email contact@commercialdisputeexpert.com.
         </p>
       </div>
-    </PageContainer>
+      </PageContainer>
+    </>
   );
 }

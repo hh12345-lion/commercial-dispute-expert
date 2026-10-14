@@ -1,17 +1,14 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Breadcrumb } from "@/components/breadcrumb";
+import { PageHero } from "@/components/page-hero";
+import { caseTypePhoto } from "@/lib/page-photos";
 import { CTABanner } from "@/components/cta-banner";
 import { ContentSection } from "@/components/content-section";
 import { buildMetadata } from "@/lib/seo";
-import { CASE_TYPES, getCaseTypeBySlug } from "@/lib/case-types";
+import { getCaseTypeBySlug } from "@/lib/case-types";
 import { siteConfig } from "@/config/site";
 
 type Props = { params: Promise<{ slug: string }> };
-
-export async function generateStaticParams() {
-  return CASE_TYPES.map((c) => ({ slug: c.slug }));
-}
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
@@ -48,23 +45,24 @@ export default async function CaseTypePage({ params }: Props) {
 
   return (
     <>
-      <ContentSection className="!py-10">
-        <Breadcrumb
-          currentPath={`/case-types/${slug}`}
-          items={[
-            { label: "Home", href: "/" },
-            { label: "Case types", href: "/case-types" },
-            { label: caseType.hubLabel },
-          ]}
-        />
-        <h1 className="text-3xl font-bold text-charcoal md:text-4xl">{caseType.title}</h1>
-        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-foreground">{caseType.summary}</p>
-        <p className="mt-4 max-w-3xl text-foreground">
+      <PageHero
+        title={caseType.title}
+        intro={caseType.summary}
+        crumbs={[
+          { label: "Home", href: "/" },
+          { label: "Case types", href: "/case-types" },
+          { label: caseType.hubLabel },
+        ]}
+        currentPath={`/case-types/${slug}`}
+        photo={caseTypePhoto(slug)}
+      />
+      <ContentSection>
+        <p className="max-w-3xl text-lg leading-relaxed text-ink/85">
           {siteConfig.brandShort} connects your firm with independent experts experienced in this
-          type of matter. Submit case details for a confidential introduction - CPR Part 35 compliant
+          type of matter. Submit case details for a confidential introduction, with CPR Part 35 compliant
           reporting where required.
         </p>
-        <h2 className="mt-10 text-xl font-bold text-charcoal">Related services</h2>
+        <h2 className="mt-12 text-2xl font-extrabold text-navy">Related services</h2>
         <ul className="mt-4 flex flex-wrap gap-3">
           {services.map((href) => {
             const service = siteConfig.navigation.services.find((s) => s.href === href);
@@ -72,7 +70,7 @@ export default async function CaseTypePage({ params }: Props) {
               <li key={href}>
                 <Link
                   href={href}
-                  className="rounded-full border border-border px-4 py-2 text-sm font-medium text-charcoal hover:border-brand-green/40"
+                  className="inline-flex items-center border-2 border-navy px-4 py-2 text-sm font-semibold text-navy hover:bg-navy hover:text-white"
                 >
                   {service?.title ?? href}
                 </Link>
